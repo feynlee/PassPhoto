@@ -21,6 +21,11 @@ struct RootView: View {
     @State private var loadError: String?
     @State private var captured: UIImage?
     @State private var showingAbout = false
+    @State private var startingNewPhoto = false
+    /// What the new-photo flow picked, acted on once its sheet is gone.
+    @State private var pendingStart: (spec: PhotoSpec, choice: PhotoSourceChoice)?
+    /// The document the photo being taken or chosen is for.
+    @State private var chosenSpec: PhotoSpec?
 
     private var lastSpec: PhotoSpec { SpecCatalog.spec(id: lastSpecID) ?? SpecCatalog.fallback }
 
@@ -33,15 +38,24 @@ struct RootView: View {
                     PhotoLibraryList(photos: photos) { photo in open(photo) }
                 }
             }
+            .safeAreaInset(edge: .bottom) {
+                // The one way to start: the same button whether or not there are saved photos.
+                Button { startingNewPhoto = true } label: {
+                    Label("New Photo", systemImage: "plus")
+                        .font(.headline)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 8)
+                }
+                .buttonStyle(.borderedProminent)
+                .buttonBorderShape(.capsule)
+                .controlSize(.large)
+                .shadow(color: .black.opacity(0.15), radius: 8, y: 3)
+                .padding(.bottom, 8)
+            }
             .navigationTitle("PassPhoto")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("About", systemImage: "info.circle") { showingAbout = true }
-                }
-                if !photos.isEmpty {
-                    ToolbarItem(placement: .primaryAction) {
-                        Menu("New Photo", systemImage: "plus") { newPhotoButtons }
-                    }
                 }
             }
             .navigationDestination(for: SavedPhoto.self) { photo in
@@ -65,6 +79,22 @@ struct RootView: View {
             EditorView(model: makeModel(for: source))
         }
         .sheet(isPresented: $showingAbout) { AboutView() }
+        .sheet(isPresented: $startingNewPhoto, onDismiss: {
+            // Open the camera or library only once the sheet is gone.
+            guard let pendingStart else { return }
+            self.pendingStart = nil
+            chosenSpec = pendingStart.spec
+            lastSpecID = pendingStart.spec.id
+            switch pendingStart.choice {
+            case .camera: takingPhoto = true
+            case .library: choosingPhoto = true
+            }
+        }) {
+            NewPhotoFlow { spec, choice in
+                pendingStart = (spec, choice)
+                startingNewPhoto = false
+            }
+        }
         #if DEBUG
         .task {
             if ProcessInfo.processInfo.arguments.contains("-demoEditor") {
@@ -83,22 +113,8 @@ struct RootView: View {
         ContentUnavailableView {
             Label("No Photos Yet", systemImage: "person.crop.square")
         } description: {
-            Text("Take or choose a photo. PassPhoto fits it to the passport, visa or ID rules of \(SpecCatalog.all.count) documents and checks it with Private Cloud Compute. Your photo never goes to a company server, and there’s no account.")
-        } actions: {
-            VStack(spacing: 12) {
-                newPhotoButtons
-            }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
+            Text("Tap New Photo, choose your document, then take or choose a photo. PassPhoto fits it to the passport, visa or ID rules of \(SpecCatalog.all.count) documents and checks it with Private Cloud Compute. Your photo never goes to a company server, and there’s no account.")
         }
-    }
-
-    @ViewBuilder
-    private var newPhotoButtons: some View {
-        if CameraController.isAvailable {
-            Button("Take Photo", systemImage: "camera") { takingPhoto = true }
-        }
-        Button("Choose from Library", systemImage: "photo.on.rectangle") { choosingPhoto = true }
     }
 
     private func load(_ item: PhotosPickerItem) async {
@@ -114,7 +130,7 @@ struct RootView: View {
             loadError = "That photo couldn’t be read."
             return
         }
-        source = EditorSource(image: normalized, spec: lastSpec)
+        source = EditorSource(image: normalized, spec: chosenSpec ?? lastSpec)
     }
 
     private func makeModel(for source: EditorSource) -> EditorModel {
