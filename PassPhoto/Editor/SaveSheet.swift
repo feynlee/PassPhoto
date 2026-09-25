@@ -50,6 +50,7 @@ struct SaveSheet: View {
                     Toggle("Keep in PassPhoto", systemImage: "tray.full", isOn: $inApp)
                 }
 
+                if model.spec.isPrintable {
                 Section {
                     Picker("Print Sheet", systemImage: "printer", selection: $paperID) {
                         Text("None").tag("")
@@ -59,6 +60,7 @@ struct SaveSheet: View {
                     }
                 } footer: {
                     Text("Copies at true size with cut marks, to print at a pharmacy or photo kiosk. Saved to Photos next to the photo.")
+                }
                 }
 
                 if model.openIssues > 0 {
@@ -112,7 +114,7 @@ struct SaveSheet: View {
         do {
             try await model.save(
                 name: name.trimmingCharacters(in: .whitespaces), toPhotos: toPhotos, inApp: inApp,
-                paper: toPhotos ? PrintSheet.Paper(rawValue: paperID) : nil, context: context
+                paper: toPhotos && model.spec.isPrintable ? PrintSheet.Paper(rawValue: paperID) : nil, context: context
             )
             dismiss()
             onSaved()

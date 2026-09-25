@@ -20,6 +20,8 @@ nonisolated struct CropGeometry: Equatable, Sendable {
 nonisolated enum CropSolver {
     /// How far off-centre the face may sit before it counts against the photo.
     static let centerToleranceMM = 1.0
+    /// The least space auto-crop leaves above the head when the spec positions the head by its eyes.
+    static let minSpaceAboveHeadMM = 2.0
 
     static func geometry(of crop: CGRect, measurement m: FaceMeasurement, spec: PhotoSpec, imageSize: CGSize) -> CropGeometry {
         let pxPerMM = crop.width / spec.widthMM
@@ -75,11 +77,13 @@ nonisolated enum CropSolver {
     private static func verticalPlacement(m: FaceMeasurement, spec: PhotoSpec, headMM: Double, pxPerMM: Double) -> (ClosedRange<Double>, Double) {
         let height = spec.heightMM * pxPerMM
         if let eye = spec.eyeLineFromBottomMM {
-            // The crop's bottom edge sits the eye-line distance below the eyes.
-            return (
-                (m.eyeY + eye.lowerBound * pxPerMM - height)...(m.eyeY + eye.upperBound * pxPerMM - height),
-                m.eyeY + eye.mid * pxPerMM - height
-            )
+            // The crop's bottom edge sits the eye-line distance below the eyes. Where the eye band allows the
+            // eyes low in the frame, its middle can push the head against the top edge, so keep some space
+            // above the head when the band allows it.
+            let byEyes = (m.eyeY + eye.lowerBound * pxPerMM - height)...(m.eyeY + eye.upperBound * pxPerMM - height)
+            let clearOfTop = m.crownY - minSpaceAboveHeadMM * pxPerMM
+            let range = byEyes.clamped(within: -.infinity, clearOfTop) ?? byEyes
+            return (range, range.clamp(m.eyeY + eye.mid * pxPerMM - height))
         }
         if let margin = spec.topMarginMM {
             return (

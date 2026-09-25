@@ -7,6 +7,7 @@ struct EditorView: View {
     @AppStorage("lastSpecID") private var lastSpecID = SpecCatalog.fallback.id
     @State private var choosingSpec = false
     @State private var saving = false
+    @State private var checksExpanded = false
 
     var body: some View {
         NavigationStack {
@@ -28,10 +29,19 @@ struct EditorView: View {
                     ContentUnavailableView("Can’t Fit This Photo", systemImage: "person.crop.square.badge.camera", description: Text(message))
                         .frame(maxHeight: .infinity)
                 case .ready:
-                    CropCanvas(model: model)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 380)
-                    ChecksList(model: model)
+                    GeometryReader { proxy in
+                        let collapsed: CGFloat = 132
+                        ZStack(alignment: .bottom) {
+                            CropCanvas(model: model)
+                                .frame(height: proxy.size.height - collapsed + 20)
+                                .frame(maxHeight: .infinity, alignment: .top)
+                            ChecksPanel(
+                                model: model, expanded: $checksExpanded,
+                                collapsedHeight: collapsed, expandedHeight: proxy.size.height * 0.75
+                            )
+                        }
+                    }
+                    .ignoresSafeArea(edges: .bottom)
                 }
             }
             .background(Color(uiColor: .systemGroupedBackground))
@@ -45,15 +55,6 @@ struct EditorView: View {
                     Button("Save") { saving = true }
                         .buttonStyle(.borderedProminent)
                         .disabled(model.phase != .ready)
-                }
-                if model.phase == .ready {
-                    ToolbarItem(placement: .bottomBar) {
-                        Button("Auto Crop", systemImage: "wand.and.stars") {
-                            withAnimation(.snappy) { model.resetToAuto() }
-                        }
-                        .labelStyle(.titleAndIcon)
-                        .disabled(model.crop == model.autoCropRect)
-                    }
                 }
             }
             .sheet(isPresented: $choosingSpec) {

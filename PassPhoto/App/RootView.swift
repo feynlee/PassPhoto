@@ -8,6 +8,7 @@ struct EditorSource: Identifiable {
     let image: CGImage
     let spec: PhotoSpec
     var editing: SavedPhoto?
+    var isDemo = false
 }
 
 struct RootView: View {
@@ -61,9 +62,16 @@ struct RootView: View {
             GuidedCameraView { image in captured = image }
         }
         .fullScreenCover(item: $source) { source in
-            EditorView(model: EditorModel(image: source.image, spec: source.spec, editing: source.editing))
+            EditorView(model: makeModel(for: source))
         }
         .sheet(isPresented: $showingAbout) { AboutView() }
+        #if DEBUG
+        .task {
+            if ProcessInfo.processInfo.arguments.contains("-demoEditor") {
+                source = EditorSource(image: DemoPhoto.image(), spec: lastSpec, isDemo: true)
+            }
+        }
+        #endif
         .alert("Can’t Open Photo", isPresented: Binding(get: { loadError != nil }, set: { if !$0 { loadError = nil } })) {
             Button("OK") {}
         } message: {
@@ -107,6 +115,14 @@ struct RootView: View {
             return
         }
         source = EditorSource(image: normalized, spec: lastSpec)
+    }
+
+    private func makeModel(for source: EditorSource) -> EditorModel {
+        let model = EditorModel(image: source.image, spec: source.spec, editing: source.editing)
+        #if DEBUG
+        if source.isDemo { model.presetMeasurement = DemoPhoto.measurement }
+        #endif
+        return model
     }
 
     private func open(_ photo: SavedPhoto) {

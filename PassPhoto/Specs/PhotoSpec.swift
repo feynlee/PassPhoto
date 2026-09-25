@@ -137,6 +137,9 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
         )
     }
 
+    /// Upload-only specs have an exact pixel size and no printed size, so they get no print sheet.
+    var isPrintable: Bool { digitalPixels == nil }
+
     var outputDPI: Double { outputPixels.width / (widthMM / 25.4) }
 
     /// This spec with the baby rules applied, where the issuer states any.

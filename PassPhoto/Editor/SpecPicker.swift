@@ -75,7 +75,9 @@ struct SpecPicker: View {
                         .foregroundStyle(Color.dsTint)
                 }
             }
+            .contentShape(.rect)
         }
+        .buttonStyle(.plain)
         .accessibilityAddTraits(spec == selection ? .isSelected : [])
     }
 

@@ -55,6 +55,10 @@ final class EditorModel {
     private var composite: (fill: UInt32, image: CGImage)?
     private let reviewer = PhotoReviewer()
     private let initialCrop: CGRect?
+    #if DEBUG
+    /// Skips Vision with known measurements (the demo photo).
+    var presetMeasurement: FaceMeasurement?
+    #endif
     private static let replaceBackgroundKey = "replaceBackground"
 
     init(image: CGImage, spec: PhotoSpec, editing: SavedPhoto? = nil) {
@@ -76,6 +80,16 @@ final class EditorModel {
 
     func start() async {
         guard phase == .measuring else { return }
+        #if DEBUG
+        if let presetMeasurement {
+            measurement = presetMeasurement
+            backgroundStats = BackgroundStats(red: 0.80, green: 0.87, blue: 0.93, unevenness: 0.01)
+            proposeCrop()
+            phase = .ready
+            await runReview()
+            return
+        }
+        #endif
         personMask = await Background.personMask(for: image)
         do {
             measurement = try await FaceMeasurer.measure(image, personMask: personMask)

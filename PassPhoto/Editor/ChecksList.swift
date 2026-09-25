@@ -9,7 +9,8 @@ struct ChecksList: View {
         @Bindable var model = model
         List {
             Section {
-                Toggle("Replace Background", systemImage: "person.and.background.dotted", isOn: $model.replaceBackground)
+                Toggle("Replace Background", systemImage: "person.and.background.dotted",
+                       isOn: model.canReplaceBackground ? $model.replaceBackground : .constant(false))
                     .disabled(!model.canReplaceBackground)
                 if model.spec.infant != nil {
                     Toggle(isOn: $model.isInfant) {
@@ -84,6 +85,7 @@ struct ChecksList: View {
             }
         }
         .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
     }
 }
 

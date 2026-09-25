@@ -4,12 +4,13 @@ import UIKit
 /// PassPhoto color tokens (from the design system). Apple system colors cover backgrounds, labels and
 /// separators; these are the tint, the check states and the guide colors drawn over photos.
 extension Color {
-    /// The one accent: links, icons, the Save button and passed checks.
-    static let dsTint = Color(light: 0x0B6E79, dark: 0x5BC8D3)
+    /// The one accent, the navy of a US passport cover: links, icons, the Save button and passed checks.
+    /// Dark mode lightens the same hue so it reads on black.
+    static let dsTint = Color(light: 0x1F2D5A, dark: 0x9DB0E4)
     /// Text and symbols on a `dsTint` fill.
-    static let dsOnTint = Color(light: 0xFFFFFF, dark: 0x00292E)
+    static let dsOnTint = Color(light: 0xFFFFFF, dark: 0x0E1633)
     /// Selected rows and status capsules for passed checks.
-    static let dsTintSoft = Color(light: 0xE0F1F3, dark: 0x12363A)
+    static let dsTintSoft = Color(light: 0xE4E9F5, dark: 0x1B2547)
     /// A check that needs a look. Always paired with an exclamation symbol.
     static let dsAttention = Color(light: 0xB25000, dark: 0xFF9F0A)
     static let dsAttentionSoft = Color(light: 0xFCEBDC, dark: 0x3D2605)

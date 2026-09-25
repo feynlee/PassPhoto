@@ -25,6 +25,15 @@ nonisolated enum SpecCatalog {
             }
     }
 
+    /// One array element that may or may not be a complete spec.
+    private struct Entry: Decodable {
+        let result: Result<PhotoSpec, any Error>
+
+        init(from decoder: any Decoder) throws {
+            result = Result { try PhotoSpec(from: decoder) }
+        }
+    }
+
     static func load(from bundle: Bundle) -> [PhotoSpec] {
         let logger = Logger(subsystem: "liziyue.PassPhoto", category: "Specs")
         let files = (bundle.urls(forResourcesWithExtension: "json", subdirectory: nil) ?? [])
@@ -33,9 +42,18 @@ nonisolated enum SpecCatalog {
         var specs: [PhotoSpec] = []
         for file in files {
             do {
-                let decoded = try JSONDecoder().decode([PhotoSpec].self, from: Data(contentsOf: file))
-                // The first file to define an id wins, so a region's researched file overrides the seed.
-                for spec in decoded where seen.insert(spec.id).inserted { specs.append(spec) }
+                // Entries are decoded one at a time, so one incomplete entry can't hide the rest of its file.
+                let entries = try JSONDecoder().decode([Entry].self, from: Data(contentsOf: file))
+                for entry in entries {
+                    switch entry.result {
+                    case .success(let spec):
+                        if seen.insert(spec.id).inserted { specs.append(spec) } else {
+                            logger.error("Duplicate id \(spec.id, privacy: .public) in \(file.lastPathComponent, privacy: .public)")
+                        }
+                    case .failure(let error):
+                        logger.notice("Skipped an entry in \(file.lastPathComponent, privacy: .public): \(String(describing: error), privacy: .public)")
+                    }
+                }
             } catch {
                 logger.error("Couldn't read \(file.lastPathComponent, privacy: .public): \(String(describing: error), privacy: .public)")
             }

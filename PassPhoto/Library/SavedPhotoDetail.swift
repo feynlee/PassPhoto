@@ -57,6 +57,7 @@ struct SavedPhotoDetail: View {
                 ShareLink(item: SharedPhotoFile(photo: photo), preview: SharePreview(photo.name)) {
                     Label("Share", systemImage: "square.and.arrow.up")
                 }
+                if photo.spec.isPrintable {
                 Menu {
                     ForEach(PrintSheet.Paper.allCases) { paper in
                         ShareLink(item: PrintSheetFile(photo: photo, paper: paper), preview: SharePreview("\(photo.name), print sheet")) {
@@ -65,6 +66,7 @@ struct SavedPhotoDetail: View {
                     }
                 } label: {
                     Label("Print Sheet", systemImage: "printer")
+                }
                 }
                 Button("Save to Photos", systemImage: "square.and.arrow.down") {
                     Task { message = await PhotoLibraryList.saveToPhotos(photo) }
