@@ -193,49 +193,49 @@ struct PhotoWorkspace: View {
 
     private func photoArea(_ model: EditorModel) -> some View {
         VStack(spacing: 0) {
-        HStack {
-            Button("Auto Crop", systemImage: "wand.and.stars") {
-                withAnimation(.snappy) { model.resetToAuto() }
-            }
-            .buttonStyle(.brandOutline(height: 36))
-            .fixedSize()
-            .disabled(model.phase != .ready || model.crop == model.autoCropRect)
-            Spacer()
-            Menu {
-                if CameraController.isAvailable {
-                    Button("Take Photo", systemImage: "camera") { takingPhoto = true }
+            ZStack(alignment: .top) {
+                switch model.phase {
+                case .measuring:
+                    ZStack {
+                        Color.black
+                        ProgressView("Finding your face…")
+                            .tint(.white)
+                            .foregroundStyle(.white)
+                    }
+                case .failed(let message):
+                    ContentUnavailableView("Can’t Fit This Photo", systemImage: "person.crop.square.badge.camera", description: Text(message))
+                case .ready:
+                    CropCanvas(model: model)
                 }
-                Button("Choose from Library", systemImage: "photo.on.rectangle") { choosingPhoto = true }
-            } label: {
-                Label("Replace Photo", systemImage: "arrow.triangle.2.circlepath")
-                    .font(.headline)
-                    .foregroundStyle(Color.dsTint)
-                    .padding(.horizontal, 12)
-                    .frame(minHeight: 36)
-                    .background(Color(uiColor: .secondarySystemGroupedBackground), in: .capsule)
-                    .overlay { Capsule().strokeBorder(Color.dsTint, lineWidth: 1.5) }
-            }
-        }
-        .padding(.horizontal)
-        .padding(.bottom, 8)
 
-        switch model.phase {
-        case .measuring:
-            ZStack {
-                Color.black
-                ProgressView("Finding your face…")
-                    .tint(.white)
-                    .foregroundStyle(.white)
+                // Auto Crop and Replace float over the top of the photo area.
+                HStack {
+                    if model.phase == .ready {
+                        Button("Auto Crop", systemImage: "wand.and.stars") {
+                            withAnimation(.snappy) { model.resetToAuto() }
+                        }
+                        .buttonStyle(FloatingChipStyle())
+                        .disabled(model.crop == model.autoCropRect)
+                    }
+                    Spacer()
+                    Menu {
+                        if CameraController.isAvailable {
+                            Button("Take Photo", systemImage: "camera") { takingPhoto = true }
+                        }
+                        Button("Choose from Library", systemImage: "photo.on.rectangle") { choosingPhoto = true }
+                    } label: {
+                        Label("Replace", systemImage: "arrow.triangle.2.circlepath")
+                            .modifier(FloatingChip())
+                    }
+                    .accessibilityLabel("Replace Photo")
+                }
+                .padding(10)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-        case .failed(let message):
-            ContentUnavailableView("Can’t Fit This Photo", systemImage: "person.crop.square.badge.camera", description: Text(message))
-                .frame(maxHeight: .infinity)
-        case .ready:
-            CropCanvas(model: model)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            StatusBar(model: model) { showingChecks = true }
-        }
+
+            if model.phase == .ready {
+                StatusBar(model: model) { showingChecks = true }
+            }
         }
     }
 
@@ -268,43 +268,77 @@ private struct DocumentCard: View {
     let toggleDefault: () -> Void
 
     var body: some View {
-        HStack(spacing: 12) {
-            Button(action: change) {
-                HStack(spacing: 12) {
-                    Text(spec.flag).font(.title2)
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text(spec.title)
-                            .font(.headline)
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Document")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .padding(.leading, 6)
+                .accessibilityHidden(true)
+            // A form field: bordered in navy, with the up-down chevron iOS uses for pickers.
+            HStack(spacing: 12) {
+                Button(action: change) {
+                    HStack(spacing: 12) {
+                        Text(spec.flag).font(.title2)
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text(spec.title)
+                                .font(.headline)
+                                .foregroundStyle(Color.dsTint)
+                            Text("\(spec.sizeLabel) · rules as of \(spec.verifiedLabel)")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.up.chevron.down")
+                            .font(.body.weight(.semibold))
                             .foregroundStyle(Color.dsTint)
-                        Text("\(spec.sizeLabel) · rules as of \(spec.verifiedLabel)")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
                     }
-                    Spacer()
-                    Image(systemName: "chevron.up.chevron.down")
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(.secondary)
-                }
-                .contentShape(.rect)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Document: \(spec.title), \(spec.sizeLabel), requirements as of \(spec.verifiedLabel)")
-            .accessibilityHint("Choose another country or document")
-
-            Button(action: toggleDefault) {
-                Image(systemName: isDefault ? "star.fill" : "star")
-                    .font(.body.weight(.semibold))
-                    .foregroundStyle(Color.dsTint)
-                    .frame(width: 36, height: 36)
                     .contentShape(.rect)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Document: \(spec.title), \(spec.sizeLabel), requirements as of \(spec.verifiedLabel)")
+                .accessibilityHint("Choose another country or document")
+
+                Button(action: toggleDefault) {
+                    Image(systemName: isDefault ? "star.fill" : "star")
+                        .font(.body.weight(.semibold))
+                        .foregroundStyle(Color.dsTint)
+                        .frame(width: 32, height: 36)
+                        .contentShape(.rect)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(isDefault ? "Default document" : "Make default document")
+                .accessibilityAddTraits(isDefault ? .isSelected : [])
             }
-            .buttonStyle(.plain)
-            .accessibilityLabel(isDefault ? "Default document" : "Make default document")
-            .accessibilityAddTraits(isDefault ? .isSelected : [])
+            .padding(.leading, 14)
+            .padding(.trailing, 8)
+            .padding(.vertical, 10)
+            .background(Color(uiColor: .secondarySystemGroupedBackground), in: .rect(cornerRadius: 12))
+            .overlay { RoundedRectangle(cornerRadius: 12).strokeBorder(Color.dsTint, lineWidth: 1) }
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
-        .background(Color(uiColor: .secondarySystemGroupedBackground), in: .rect(cornerRadius: 12))
+    }
+}
+
+/// A dark glass capsule floating over the photo area, readable over the photo or its surround.
+struct FloatingChip: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(.white)
+            .padding(.horizontal, 12)
+            .frame(minHeight: 34)
+            .background(.black.opacity(0.55), in: .capsule)
+            .overlay { Capsule().strokeBorder(.white.opacity(0.18), lineWidth: 0.5) }
+            .contentShape(.capsule)
+    }
+}
+
+struct FloatingChipStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .modifier(FloatingChip())
+            .opacity(isEnabled ? (configuration.isPressed ? 0.7 : 1) : 0.45)
     }
 }
 
