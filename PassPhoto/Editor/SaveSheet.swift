@@ -70,6 +70,7 @@ struct SaveSheet: View {
                     }
                 }
             }
+            .tint(.dsTintFill)
             .navigationTitle("Save Photo")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

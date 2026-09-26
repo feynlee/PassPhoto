@@ -4,9 +4,9 @@ import UIKit
 /// PassPhoto color tokens (from the design system). Apple system colors cover backgrounds, labels and
 /// separators; these are the tint, the check states and the guide colors drawn over photos.
 extension Color {
-    /// The one accent, the navy of a US passport cover: links, icons, the Save button and passed checks.
-    /// Dark mode lightens the same hue so it reads on black.
-    static let dsTint = Color(light: 0x1F2D5A, dark: 0x9DB0E4)
+    /// The one accent, the navy of a US passport cover: links, icons, outlines and passed checks. Navy is
+    /// unreadable on black, so dark mode uses a brighter blue of the same hue (225°) that still reads.
+    static let dsTint = Color(light: 0x1F2D5A, dark: 0x7A92DA)
     /// Filled buttons: the icon's navy exactly, in both themes, with white text.
     static let dsTintFill = Color(rgb: 0x1F2D5A)
     /// Text and symbols on a `dsTint` fill.
@@ -90,4 +90,37 @@ extension CheckStatus {
         case .pending: .dsGuideNeutral
         }
     }
+}
+
+/// PassPhoto's buttons, in the icon's navy: `prominent` is solid navy with white text; otherwise a navy
+/// outline with navy text on the surface, in place of iOS's pale tinted fill.
+struct BrandButtonStyle: ButtonStyle {
+    var prominent = false
+    var height: CGFloat = 50
+
+    @Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.headline)
+            .foregroundStyle(prominent ? Color.white : Color.dsTint)
+            .frame(maxWidth: .infinity, minHeight: height)
+            .padding(.horizontal, 12)
+            .background {
+                if prominent {
+                    Capsule().fill(Color.dsTintFill)
+                } else {
+                    Capsule().fill(Color(uiColor: .secondarySystemGroupedBackground))
+                    Capsule().strokeBorder(Color.dsTint, lineWidth: 1.5)
+                }
+            }
+            .opacity(isEnabled ? (configuration.isPressed ? 0.7 : 1) : 0.4)
+            .contentShape(.capsule)
+    }
+}
+
+extension ButtonStyle where Self == BrandButtonStyle {
+    static var brand: BrandButtonStyle { BrandButtonStyle(prominent: true) }
+    static var brandOutline: BrandButtonStyle { BrandButtonStyle() }
+    static func brandOutline(height: CGFloat) -> BrandButtonStyle { BrandButtonStyle(height: height) }
 }

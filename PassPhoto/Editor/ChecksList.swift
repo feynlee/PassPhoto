@@ -67,6 +67,7 @@ struct ChecksList: View {
             SpecificationsSection(spec: model.spec, infant: model.isInfant)
         }
         .listStyle(.insetGrouped)
+        .tint(.dsTintFill)
     }
 }
 

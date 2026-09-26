@@ -70,9 +70,11 @@ struct PhotoWorkspace: View {
                 }
                 if let model {
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("Save") { saving = true }
-                            .buttonStyle(.borderedProminent)
-                            .tint(.dsTintFill)
+                        Button { saving = true } label: {
+                            Text("Save").foregroundStyle(.white)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.dsTintFill)
                             .disabled(model.phase != .ready)
                     }
                 }
@@ -148,6 +150,7 @@ struct PhotoWorkspace: View {
                     Toggle(isOn: infant) {
                         Label(babyLabel, systemImage: "figure.and.child.holdinghands")
                     }
+                    .tint(.dsTintFill)
                 } footer: {
                     Text("\(spec.country) has separate rules for babies. Turn this on to use them for the instructions, guides and checks.")
                 }
@@ -192,7 +195,8 @@ struct PhotoWorkspace: View {
             Button("Auto Crop", systemImage: "wand.and.stars") {
                 withAnimation(.snappy) { model.resetToAuto() }
             }
-            .buttonStyle(.bordered)
+            .buttonStyle(.brandOutline(height: 36))
+            .fixedSize()
             .disabled(model.phase != .ready || model.crop == model.autoCropRect)
             Spacer()
             Menu {
@@ -202,8 +206,13 @@ struct PhotoWorkspace: View {
                 Button("Choose from Library", systemImage: "photo.on.rectangle") { choosingPhoto = true }
             } label: {
                 Label("Replace Photo", systemImage: "arrow.triangle.2.circlepath")
+                    .font(.headline)
+                    .foregroundStyle(Color.dsTint)
+                    .padding(.horizontal, 12)
+                    .frame(minHeight: 36)
+                    .background(Color(uiColor: .secondarySystemGroupedBackground), in: .capsule)
+                    .overlay { Capsule().strokeBorder(Color.dsTint, lineWidth: 1.5) }
             }
-            .buttonStyle(.bordered)
         }
         .padding(.horizontal)
         .padding(.bottom, 8)
@@ -308,16 +317,13 @@ struct SourceButtons: View {
                 Button(action: takePhoto) {
                     centred("Take Photo", systemImage: "camera.fill")
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.dsTintFill)
+                .buttonStyle(.brand)
             }
             Button(action: chooseFromLibrary) {
                 centred("Choose from Library", systemImage: "photo.on.rectangle")
             }
-            .buttonStyle(.bordered)
+            .buttonStyle(.brandOutline)
         }
-        .buttonBorderShape(.capsule)
-        .controlSize(.large)
     }
 
     private func centred(_ title: String, systemImage: String) -> some View {
@@ -325,9 +331,7 @@ struct SourceButtons: View {
             Image(systemName: systemImage)
             Text(title)
         }
-        .font(.headline)
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 6)
     }
 }
 

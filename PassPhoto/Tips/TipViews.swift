@@ -78,10 +78,7 @@ struct SavedConfirmationCard: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 6)
             }
-            .buttonStyle(.borderedProminent)
-            .buttonBorderShape(.capsule)
-            .controlSize(.large)
-            .tint(.dsTintFill)
+            .buttonStyle(.brand)
             .padding(.horizontal, 18)
             .padding(.vertical, 18)
         }
@@ -110,13 +107,13 @@ struct TipSupportBanner: View {
 
     var body: some View {
         let tips = jar.store
-        let accent: Color = tips.hasTipped ? CelebrationFrame.pink : .orange
+        let accent: Color = .dsTint
         let showsOptions = !tips.hasTipped || showsMore
 
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top, spacing: 12) {
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(accent.opacity(0.15))
+                    .fill(Color.dsTintSoft)
                     .overlay {
                         Image(systemName: tips.hasTipped ? "heart.fill" : "cup.and.saucer.fill")
                             .resizable()
@@ -251,9 +248,8 @@ struct TipOptions: View {
                 .font(.subheadline.weight(.bold))
                 .frame(width: 44)
             }
-            .buttonStyle(.borderedProminent)
-            .buttonBorderShape(.capsule)
-            .tint(.dsTintFill)
+            .buttonStyle(BrandButtonStyle(prominent: true, height: 40))
+            .frame(width: 84)
         }
         .padding(10)
         .background(Color(uiColor: .tertiarySystemGroupedBackground), in: .rect(cornerRadius: 16))
@@ -312,13 +308,13 @@ struct TipThanksCard: View {
     var body: some View {
         VStack(spacing: 0) {
             RoundedRectangle(cornerRadius: 20)
-                .fill(CelebrationFrame.pink.opacity(0.15))
+                .fill(Color.dsTintSoft)
                 .frame(width: 76, height: 76)
                 .overlay {
                     Image(systemName: "heart.fill")
                         .resizable()
                         .scaledToFit()
-                        .foregroundStyle(CelebrationFrame.pink)
+                        .foregroundStyle(Color.dsTint)
                         .padding(17)
                         .symbolEffect(.bounce, value: heartBeat)
                 }
@@ -349,10 +345,7 @@ struct TipThanksCard: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 6)
             }
-            .buttonStyle(.borderedProminent)
-            .buttonBorderShape(.capsule)
-            .controlSize(.large)
-            .tint(.dsTintFill)
+            .buttonStyle(.brand)
             .padding(.top, 20)
         }
         .padding(24)
@@ -379,8 +372,8 @@ struct TipChipStyle: ButtonStyle {
             .foregroundStyle(Color.dsTint)
             .frame(maxWidth: .infinity, minHeight: 40)
             .padding(.horizontal, 6)
-            .background(Color(uiColor: .tertiarySystemFill), in: .capsule)
-            .overlay { Capsule().strokeBorder(Color.dsTint, lineWidth: selected ? 1.5 : 0) }
+            .background(selected ? Color.dsTintSoft : Color(uiColor: .secondarySystemGroupedBackground), in: .capsule)
+            .overlay { Capsule().strokeBorder(Color.dsTint, lineWidth: 1.5) }
             .opacity(configuration.isPressed ? 0.6 : 1)
     }
 }
