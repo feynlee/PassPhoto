@@ -14,7 +14,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "PassPhoto"
+            "value": "秒证照"
           }
         }
       }
@@ -32,7 +32,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "PassPhoto"
+            "value": "秒证照"
           }
         }
       }
@@ -50,7 +50,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "PassPhoto 使用相机拍摄你的护照、签证或证件照。"
+            "value": "秒证照使用相机拍摄你的护照、签证或证件照。"
           }
         }
       }
@@ -68,7 +68,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "PassPhoto 会将制作好的护照、签证和证件照存入你的照片图库。"
+            "value": "秒证照会将制作好的护照、签证和证件照存入你的照片图库。"
           }
         }
       }
