@@ -1,0 +1,62 @@
+{
+  "identifier": "B1115917",
+  "nonRenewingSubscriptions": [],
+  "products": [
+    {
+      "displayPrice": "0.99",
+      "familyShareable": false,
+      "internalID": "6000000001",
+      "localizations": [
+        {
+          "description": "Optional developer tip; all features work without it.",
+          "displayName": "Small Coffee",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "liziyue.PassPhoto.tip.small",
+      "referenceName": "Small Coffee",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "1.99",
+      "familyShareable": false,
+      "internalID": "6000000002",
+      "localizations": [
+        {
+          "description": "Optional developer tip; all features work without it.",
+          "displayName": "Coffee",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "liziyue.PassPhoto.tip.medium",
+      "referenceName": "Coffee",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "2.99",
+      "familyShareable": false,
+      "internalID": "6000000003",
+      "localizations": [
+        {
+          "description": "Optional developer tip; all features work without it.",
+          "displayName": "Large Coffee",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "liziyue.PassPhoto.tip.large",
+      "referenceName": "Large Coffee",
+      "type": "Consumable"
+    }
+  ],
+  "settings": {
+    "_failTransactionsEnabled": false,
+    "_locale": "en_US",
+    "_storefront": "USA",
+    "_storeKitErrors": []
+  },
+  "subscriptionGroups": [],
+  "version": {
+    "major": 4,
+    "minor": 0
+  }
+}

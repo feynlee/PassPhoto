@@ -11,6 +11,7 @@ struct PhotoWorkspace: View {
     @State private var model: EditorModel?
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(TipJar.self) private var jar
     @AppStorage("lastSpecID") private var lastSpecID = SpecCatalog.fallback.id
     @AppStorage(DefaultDocument.key) private var defaultID = ""
     @State private var choosingSpec = false
@@ -98,7 +99,12 @@ struct PhotoWorkspace: View {
                 }
             }
             .sheet(isPresented: $saving) {
-                if let model { SaveSheet(model: model) { dismiss() } }
+                if let model {
+                    SaveSheet(model: model) { summary in
+                        jar.photoSaved(summary)
+                        dismiss()
+                    }
+                }
             }
             .fullScreenCover(isPresented: $takingPhoto, onDismiss: {
                 if let captured { load(captured) }

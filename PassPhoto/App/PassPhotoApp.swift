@@ -4,12 +4,15 @@ import SwiftUI
 @main
 struct PassPhotoApp: App {
     @Environment(\.scenePhase) private var scenePhase
+    @State private var jar = TipJar()
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .tint(.dsTint)
                 .environment(RequirementsUpdater.shared)
+                .environment(jar)
+                .task { await jar.store.loadProducts() }
         }
         .modelContainer(for: SavedPhoto.self)
         .onChange(of: scenePhase, initial: true) { _, phase in

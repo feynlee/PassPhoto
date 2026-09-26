@@ -21,6 +21,7 @@ struct RootView: View {
     @State private var workspace: WorkspaceStart?
     @State private var loadError: String?
     @State private var showingAbout = false
+    @Environment(TipJar.self) private var jar
 
     /// New photos start on the default document, else the last one used.
     private var startSpec: PhotoSpec {
@@ -28,6 +29,37 @@ struct RootView: View {
     }
 
     var body: some View {
+        ZStack {
+            library
+            overlays
+        }
+    }
+
+    /// The saved-photo card with the tip jar, the thank-you after a tip, and the celebration, above everything.
+    @ViewBuilder
+    private var overlays: some View {
+        if let summary = jar.saved {
+            Color.black.opacity(0.3)
+                .ignoresSafeArea()
+                .onTapGesture { withAnimation(.snappy) { jar.saved = nil } }
+                .transition(.opacity)
+            VStack {
+                Spacer()
+                SavedConfirmationCard(summary: summary)
+            }
+            .transition(.move(edge: .bottom).combined(with: .opacity))
+        }
+        if jar.showsThanks {
+            Color.black.opacity(0.35).ignoresSafeArea().transition(.opacity)
+            TipThanksCard().transition(.scale(scale: 0.9).combined(with: .opacity))
+        }
+        if let celebration = jar.celebration {
+            CelebrationView(celebration: celebration) { jar.celebrationFinished(celebration.id) }
+                .id(celebration.id)
+        }
+    }
+
+    private var library: some View {
         NavigationStack {
             Group {
                 if photos.isEmpty {
@@ -72,8 +104,17 @@ struct RootView: View {
             }
         }
         .sheet(isPresented: $showingAbout) { AboutView() }
+        .animation(.snappy, value: jar.saved)
+        .animation(.snappy, value: jar.showsThanks)
         #if DEBUG
         .task {
+            if let style = UserDefaults.standard.string(forKey: "celebrate").flatMap(CelebrationStyle.init(rawValue:)) {
+                try? await Task.sleep(for: .seconds(1))
+                jar.celebrate(style)
+            }
+            if ProcessInfo.processInfo.arguments.contains("-demoSaved") {
+                jar.saved = SavedSummary(fileName: "United States Passport 2026-09-26 09.30.jpg", toPhotos: true, inApp: true, printSheet: true)
+            }
             if ProcessInfo.processInfo.arguments.contains("-demoEditor") {
                 let model = EditorModel(image: DemoPhoto.image(), spec: startSpec)
                 model.presetMeasurement = DemoPhoto.measurement

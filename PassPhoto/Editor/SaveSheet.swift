@@ -3,7 +3,7 @@ import SwiftUI
 
 struct SaveSheet: View {
     let model: EditorModel
-    let onSaved: () -> Void
+    let onSaved: (SavedSummary) -> Void
 
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -112,12 +112,14 @@ struct SaveSheet: View {
         busy = true
         defer { busy = false }
         do {
-            try await model.save(
-                name: name.trimmingCharacters(in: .whitespaces), toPhotos: toPhotos, inApp: inApp,
-                paper: toPhotos && model.spec.isPrintable ? PrintSheet.Paper(rawValue: paperID) : nil, context: context
-            )
+            let trimmed = name.trimmingCharacters(in: .whitespaces)
+            let paper = toPhotos && model.spec.isPrintable ? PrintSheet.Paper(rawValue: paperID) : nil
+            try await model.save(name: trimmed, toPhotos: toPhotos, inApp: inApp, paper: paper, context: context)
             dismiss()
-            onSaved()
+            onSaved(SavedSummary(
+                fileName: PhotoStore.exportFileName(name: trimmed, date: model.editing?.createdAt ?? .now),
+                toPhotos: toPhotos, inApp: inApp, printSheet: paper != nil
+            ))
         } catch {
             self.error = error.localizedDescription
         }
