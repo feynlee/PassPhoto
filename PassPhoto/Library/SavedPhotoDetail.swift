@@ -41,6 +41,10 @@ struct SavedPhotoDetail: View {
                 LabeledContent("Pixels", value: "\(photo.pixelWidth) × \(photo.pixelHeight)")
                 LabeledContent("Created", value: photo.createdAt.formatted(date: .long, time: .shortened))
                 LabeledContent("File name", value: photo.exportFileName)
+                if photo.rulesChanged {
+                    Label("\(photo.spec.title) rules changed after this photo was made (now as of \(photo.spec.verifiedLabel)). Adjust it to check it against the new rules.", systemImage: CheckStatus.attention.symbol)
+                        .foregroundStyle(Color.dsAttention)
+                }
                 if photo.backgroundReplaced {
                     LabeledContent("Background", value: "Replaced")
                 }

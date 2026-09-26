@@ -3,11 +3,18 @@ import SwiftUI
 
 @main
 struct PassPhotoApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+
     var body: some Scene {
         WindowGroup {
             RootView()
                 .tint(.dsTint)
+                .environment(RequirementsUpdater.shared)
         }
         .modelContainer(for: SavedPhoto.self)
+        .onChange(of: scenePhase, initial: true) { _, phase in
+            // Requirements are checked at most once a day, when the app comes to the front.
+            if phase == .active { Task { await RequirementsUpdater.shared.checkIfDue() } }
+        }
     }
 }

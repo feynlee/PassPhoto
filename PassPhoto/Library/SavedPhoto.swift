@@ -22,6 +22,8 @@ final class SavedPhoto {
     var openIssues: Int = 0
     var backgroundReplaced: Bool = false
     var isInfant: Bool = false
+    /// The rules the photo was made with (PhotoSpec.fingerprint).
+    var specFingerprint: String = ""
 
     init(name: String, spec: PhotoSpec, createdAt: Date, fileName: String, originalFileName: String, crop: CGRect, pixels: CGSize, openIssues: Int) {
         self.name = name
@@ -39,6 +41,11 @@ final class SavedPhoto {
     }
 
     var spec: PhotoSpec { SpecCatalog.spec(id: specID) ?? SpecCatalog.fallback }
+
+    /// The document's rules have changed since this photo was made.
+    var rulesChanged: Bool {
+        !specFingerprint.isEmpty && SpecCatalog.spec(id: specID).map { $0.fingerprint != specFingerprint } ?? false
+    }
     var crop: CGRect { CGRect(x: cropX, y: cropY, width: cropWidth, height: cropHeight) }
     var fileURL: URL { PhotoStore.directory.appending(path: fileName) }
     var originalURL: URL { PhotoStore.directory.appending(path: originalFileName) }

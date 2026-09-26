@@ -59,6 +59,11 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
         case crown
     }
 
+    /// Whether the issuer accepts a photo the applicant supplies.
+    enum ApplicantPhoto: String, Sendable, Decodable {
+        case accepted, certifiedPhotographerOnly, officeOnly
+    }
+
     enum Confidence: String, Sendable, Decodable {
         case confirmed, partial
     }
@@ -111,6 +116,7 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
     let source: URL
     let verified: String
     let confidence: Confidence
+    let applicantPhoto: ApplicantPhoto
 
     static let printDPI: Double = 600
 
@@ -140,6 +146,34 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
     /// Upload-only specs have an exact pixel size and no printed size, so they get no print sheet.
     var isPrintable: Bool { digitalPixels == nil }
 
+    /// When the values were last confirmed on the official page.
+    var verifiedDate: Date? {
+        // A calendar day, not an instant: read it in the local time zone so it never shows as the day before.
+        let parts = verified.split(separator: "-").compactMap { Int($0) }
+        guard parts.count == 3 else { return nil }
+        return Calendar.current.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2]))
+    }
+
+    /// "Sep 25, 2026", or the raw value if it isn't a date.
+    var verifiedLabel: String {
+        verifiedDate?.formatted(date: .abbreviated, time: .omitted) ?? verified
+    }
+
+    /// Not confirmed for over six months: two quarterly reviews missed.
+    var isStale: Bool {
+        guard let verifiedDate else { return true }
+        return verifiedDate < Date.now.addingTimeInterval(-183 * 86_400)
+    }
+
+    /// Identifies the rules a photo was made with, so saved photos can tell when they've changed.
+    var fingerprint: String {
+        [
+            "\(widthMM)x\(heightMM)", "\(headHeightMM)", headTop.rawValue, "\(String(describing: eyeLineFromBottomMM))",
+            "\(String(describing: topMarginMM))", "\(String(describing: faceWidthMM))", background.rawValue, glasses.rawValue,
+            "\(String(describing: digitalPixels))", "\(String(describing: maxFileKB))", applicantPhoto.rawValue,
+        ].joined(separator: "|")
+    }
+
     var outputDPI: Double { outputPixels.width / (widthMM / 25.4) }
 
     /// This spec with the baby rules applied, where the issuer states any.
@@ -161,8 +195,11 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
     private enum CodingKeys: String, CodingKey {
         case id, countryCode, country, document, kind, widthMM, heightMM, sizeLabel, headHeightMM, headTop, eyeLineFromBottomMM,
              topMarginMM, faceWidthMM, background, backgroundFill, glasses, digitalPixels, minPixels, maxFileKB, notes,
-             infant, source, verified, confidence
+             infant, source, verified, confidence, applicantPhoto, schema
     }
+
+    /// The newest entry format this app understands. Downloaded entries that need more are skipped.
+    static let supportedSchema = 1
 
     init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -194,6 +231,10 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
         source = try c.decode(URL.self, forKey: .source)
         verified = try c.decodeIfPresent(String.self, forKey: .verified) ?? ""
         confidence = try c.decodeIfPresent(Confidence.self, forKey: .confidence) ?? .partial
+        applicantPhoto = try c.decodeIfPresent(ApplicantPhoto.self, forKey: .applicantPhoto) ?? .accepted
+        if let schema = try c.decodeIfPresent(Int.self, forKey: .schema), schema > Self.supportedSchema {
+            throw DecodingError.dataCorruptedError(forKey: .schema, in: c, debugDescription: "Needs schema \(schema)")
+        }
     }
 }
 

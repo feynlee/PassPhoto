@@ -99,7 +99,11 @@ struct SavedPhotoRow: View {
                 Text("\(photo.spec.flag) \(photo.spec.sizeLabel) · \(photo.createdAt.formatted(date: .abbreviated, time: .shortened))")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                if photo.openIssues > 0 {
+                if photo.rulesChanged {
+                    Label("Rules changed since this photo was made", systemImage: CheckStatus.attention.symbol)
+                        .font(.caption.weight(.medium))
+                        .foregroundStyle(Color.dsAttention)
+                } else if photo.openIssues > 0 {
                     Label("\(photo.openIssues) to review", systemImage: CheckStatus.attention.symbol)
                         .font(.caption.weight(.medium))
                         .foregroundStyle(Color.dsAttention)

@@ -21,6 +21,10 @@ struct ChecksList: View {
                 Text(adjustmentsFooter)
             }
 
+            if let acceptance = model.acceptanceCheck {
+                Section { CheckRow(check: acceptance) }
+            }
+
             Section {
                 ForEach(model.measuredChecks) { CheckRow(check: $0) }
                 if let background = model.backgroundCheck { CheckRow(check: background) }

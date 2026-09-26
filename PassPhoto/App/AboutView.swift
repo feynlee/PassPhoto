@@ -2,6 +2,17 @@ import SwiftUI
 
 struct AboutView: View {
     @Environment(\.dismiss) private var dismiss
+    private var updater: RequirementsUpdater { .shared }
+
+    private var requirementsFooter: String {
+        let base = "Every requirement is re-checked against its official page each quarter, and PassPhoto downloads updates on its own. Each document links to its official page and shows when it was last confirmed."
+        switch updater.status {
+        case .updated: return "Updated to the latest requirements. " + base
+        case .upToDate: return "You have the latest requirements. " + base
+        case .failed(let reason): return "\(reason) " + base
+        default: return base
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -30,10 +41,26 @@ struct AboutView: View {
                 Section {
                     LabeledContent("Documents", value: "\(SpecCatalog.all.count)")
                     LabeledContent("Countries", value: "\(Set(SpecCatalog.all.map(\.countryCode)).count)")
+                    if let asOf = updater.asOf {
+                        LabeledContent("Requirements as of", value: asOf.formatted(date: .long, time: .omitted))
+                    }
+                    if let lastChecked = updater.lastChecked {
+                        LabeledContent("Last checked for updates", value: lastChecked.formatted(.relative(presentation: .named)))
+                    }
+                    Button {
+                        Task { await updater.check() }
+                    } label: {
+                        HStack {
+                            Text("Check for Updates")
+                            Spacer()
+                            if updater.status == .checking { ProgressView() }
+                        }
+                    }
+                    .disabled(updater.status == .checking)
                 } header: {
                     Text("Requirements")
                 } footer: {
-                    Text("Each requirement links to the official page it came from and shows when it was checked. Rules change; check the official page before you submit.")
+                    Text(requirementsFooter)
                 }
             }
             .navigationTitle("About PassPhoto")

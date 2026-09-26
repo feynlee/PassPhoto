@@ -40,6 +40,8 @@ struct SpecList: View {
     }
 
     private var groups: [(country: String, specs: [PhotoSpec])] {
+        // Reading the revision refreshes the list when new requirements are installed.
+        _ = RequirementsUpdater.shared.revision
         let trimmed = query.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return SpecCatalog.byCountry }
         return SpecCatalog.byCountry.compactMap { group in
@@ -61,6 +63,12 @@ struct SpecList: View {
             if query.isEmpty, !recents.filter({ $0 != defaultSpec }).isEmpty {
                 Section("Recent") {
                     ForEach(recents.filter { $0 != defaultSpec }) { row($0, showCountry: true) }
+                }
+            }
+            if query.isEmpty, let asOf = RequirementsUpdater.shared.asOf {
+                Section {
+                } footer: {
+                    Text("Requirements as of \(asOf.formatted(date: .long, time: .omitted)). Each document shows the date it was last confirmed on its official page.")
                 }
             }
             ForEach(groups, id: \.country) { group in

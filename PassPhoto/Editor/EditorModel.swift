@@ -213,7 +213,14 @@ final class EditorModel {
         }
     }
 
-    var checks: [CheckResult] { measuredChecks + [backgroundCheck].compactMap { $0 } + modelChecks }
+    /// Whether the issuer accepts a photo made at home at all.
+    var acceptanceCheck: CheckResult? {
+        SpecNoticesSection.applicantMessage(spec).map {
+            CheckResult(id: "accepted", title: "Accepted from you", detail: $0, status: .fail, source: .measured)
+        }
+    }
+
+    var checks: [CheckResult] { [acceptanceCheck].compactMap { $0 } + measuredChecks + [backgroundCheck].compactMap { $0 } + modelChecks }
 
     func status(of id: String) -> CheckStatus {
         measuredChecks.first { $0.id == id }?.status ?? .pending
@@ -283,6 +290,7 @@ final class EditorModel {
             editing.openIssues = openIssues
             editing.backgroundReplaced = backgroundIsReplaced
             editing.isInfant = isInfant
+            editing.specFingerprint = spec.fingerprint
         } else {
             // Keep the original too, so the crop can be adjusted later without losing pixels.
             let originalName = "\(id)-original.jpg"
@@ -294,6 +302,7 @@ final class EditorModel {
             )
             photo.backgroundReplaced = backgroundIsReplaced
             photo.isInfant = isInfant
+            photo.specFingerprint = spec.fingerprint
             context.insert(photo)
         }
         try context.save()

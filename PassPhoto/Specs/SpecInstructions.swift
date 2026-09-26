@@ -118,12 +118,49 @@ struct SpecificationsSection: View {
             Text("Specifications")
         } footer: {
             VStack(alignment: .leading, spacing: 6) {
-                Text("PassPhoto measures and crops these for you. Checked against the official rules on \(spec.verified).")
+                Text("Requirements as of \(spec.verifiedLabel), checked against the official page. PassPhoto measures and crops these for you.")
                 if spec.confidence == .partial {
                     Text("Some values come from the international standard because the issuer doesn’t publish them. Check the official rules before you submit.")
                 }
                 ForEach(spec.notes, id: \.self) { Text($0) }
             }
+        }
+    }
+}
+
+/// Warnings that come before the instructions: when the issuer doesn't accept a photo made at home, and
+/// when the rules haven't been confirmed recently.
+struct SpecNoticesSection: View {
+    let spec: PhotoSpec
+
+    var body: some View {
+        if spec.applicantPhoto != .accepted || spec.isStale {
+            Section {
+                if let message = Self.applicantMessage(spec) {
+                    Label {
+                        Text(message)
+                    } icon: {
+                        Image(systemName: CheckStatus.fail.symbol).foregroundStyle(Color.dsFail)
+                    }
+                }
+                if spec.isStale {
+                    Label {
+                        Text("These requirements were last confirmed on \(spec.verifiedLabel). Check the official page before you submit.")
+                    } icon: {
+                        Image(systemName: CheckStatus.attention.symbol).foregroundStyle(Color.dsAttention)
+                    }
+                }
+            }
+        }
+    }
+
+    static func applicantMessage(_ spec: PhotoSpec) -> String? {
+        switch spec.applicantPhoto {
+        case .accepted: nil
+        case .certifiedPhotographerOnly:
+            "\(spec.country) only accepts photos taken at the office or sent digitally by a certified photographer. A photo you make yourself may be refused."
+        case .officeOnly:
+            "\(spec.country) takes this photo at the office. You don’t need to bring one."
         }
     }
 }

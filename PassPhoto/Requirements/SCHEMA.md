@@ -1,5 +1,7 @@
 # Requirement files
 
+These files drive the PassPhoto app. The app downloads them (see `manifest.json`) and falls back to the copy bundled with it.
+
 Each `*.json` file in this folder is an array of specs. The app loads every file and sorts by country.
 
 ```jsonc
@@ -27,7 +29,9 @@ Each `*.json` file in this folder is an array of specs. The app loads every file
   "infant": null,                   // only when the issuer states different rules for babies (see below)
   "source": "https://travel.state.gov/…", // the official page the values came from
   "verified": "2026-09-25",         // date the values were checked against the source
-  "confidence": "confirmed"         // confirmed: every number read from the official source; partial: size confirmed, some ranges from a secondary source
+  "confidence": "confirmed",
+  "applicantPhoto": "accepted",     // optional: accepted (default) | certifiedPhotographerOnly | officeOnly
+  "schema": 1                       // optional: the schema version this entry needs; apps skip entries newer than they understand         // confirmed: every number read from the official source; partial: size confirmed, some ranges from a secondary source
 }
 ```
 

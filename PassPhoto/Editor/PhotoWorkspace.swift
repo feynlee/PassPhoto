@@ -136,6 +136,7 @@ struct PhotoWorkspace: View {
 
     private var instructions: some View {
         List {
+            SpecNoticesSection(spec: spec)
             if spec.infant != nil {
                 Section {
                     Toggle(isOn: infant) {
@@ -245,7 +246,7 @@ private struct DocumentCard: View {
                         Text(spec.title)
                             .font(.headline)
                             .foregroundStyle(.primary)
-                        Text(spec.sizeLabel)
+                        Text("\(spec.sizeLabel) · rules as of \(spec.verifiedLabel)")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }
@@ -257,7 +258,7 @@ private struct DocumentCard: View {
                 .contentShape(.rect)
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("Document: \(spec.title), \(spec.sizeLabel)")
+            .accessibilityLabel("Document: \(spec.title), \(spec.sizeLabel), requirements as of \(spec.verifiedLabel)")
             .accessibilityHint("Choose another country or document")
 
             Button(action: toggleDefault) {

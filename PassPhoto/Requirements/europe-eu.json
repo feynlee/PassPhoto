@@ -411,7 +411,8 @@
     },
     "source": "https://www.bundesdruckerei.de/system/files/dokumente/pdf/Passbildschablone-Erwachsene.pdf",
     "verified": "2026-09-25",
-    "confidence": "confirmed"
+    "confidence": "confirmed",
+    "applicantPhoto": "certifiedPhotographerOnly"
   },
   {
     "id": "gr-passport",
