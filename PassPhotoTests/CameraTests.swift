@@ -23,10 +23,19 @@ struct CameraTests {
         #expect(hint(face(scale: 0.8), tilt: 2).ready)
     }
 
+    @Test func eyesAtTheScreenCentreWhenTheCameraIsAtEyeLevel() {
+        // Eyes sit about 47% down the head; with the camera level with them they appear mid-frame.
+        let oval = CaptureHint.oval(in: screen)
+        let eyes = oval.minY + oval.height * 0.47
+        #expect(abs(eyes - screen.height / 2) < screen.height * 0.03)
+    }
+
     @Test func hintsSayWhatToDo() {
         #expect(hint(nil).message == "Look at the camera")
         #expect(hint(face(scale: 0.5)).message == "Move closer")
-        #expect(hint(face(scale: 1.8)).message == "Move back a little")
+        #expect(hint(face(scale: 2.2)).message == "Move back a little")
+        // A selfie at arm's length, bigger than the outline, is fine.
+        #expect(hint(face(scale: 1.7)).ready)
         // Face low on screen: the camera is too high, so lower it; and the reverse.
         #expect(hint(face(dy: 150)).message == "Raise the phone a little")
         #expect(hint(face(dy: -150)).message == "Lower the phone a little")

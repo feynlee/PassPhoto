@@ -17,6 +17,10 @@ struct GuidedCameraView: View {
     @State private var capturing = false
     @State private var screen = CGSize(width: 390, height: 844)
     @State private var preview = PreviewLayerReference()
+    #if DEBUG
+    /// Where the camera thinks the face is, drawn in debug builds to check the coaching.
+    @State private var debugFace: CGRect?
+    #endif
 
     var body: some View {
         ZStack {
@@ -40,6 +44,16 @@ struct GuidedCameraView: View {
                 HeadOutline(ready: hint.ready)
                     .allowsHitTesting(false)
                     .ignoresSafeArea()
+                #if DEBUG
+                if let debugFace {
+                    Rectangle()
+                        .stroke(.yellow, lineWidth: 1.5)
+                        .frame(width: debugFace.width, height: debugFace.height)
+                        .position(x: debugFace.midX, y: debugFace.midY)
+                        .allowsHitTesting(false)
+                        .ignoresSafeArea()
+                }
+                #endif
             }
 
             VStack {
@@ -114,6 +128,9 @@ struct GuidedCameraView: View {
                 reading = newReading
                 // The preview layer places the face exactly where it's drawn on screen.
                 let face = newReading.face.flatMap { preview.layer?.layerRectConverted(fromMetadataOutputRect: $0) }
+                #if DEBUG
+                debugFace = face
+                #endif
                 _ = stabilizer.update(CaptureHint(face: face, faceCount: newReading.faceCount, brightness: newReading.brightness,
                                                   tilt: level.tilt, pitch: level.pitch, screen: screen))
             }
@@ -164,12 +181,13 @@ struct CaptureHint: Equatable {
     let ready: Bool
 
     /// The head outline, in screen points: head-shaped (a little under three quarters as wide as tall), a
-    /// bit over a third of the screen's height, centred, with room above for the hair. At that size the
-    /// head is large enough to crop to any document at full resolution.
+    /// bit over a third of the screen's height, and placed so the eyes (about halfway down the head) land
+    /// near the middle of the screen. The preview shows the whole height of the frame, so that's where the
+    /// eyes appear when the camera is level with them, which is what passport photos need.
     static func oval(in size: CGSize) -> CGRect {
         let height = size.height * 0.36
         let width = height * 0.74
-        return CGRect(x: (size.width - width) / 2, y: size.height * 0.16, width: width, height: height)
+        return CGRect(x: (size.width - width) / 2, y: size.height * 0.48 - height * 0.47, width: width, height: height)
     }
 
     /// Where the camera's face box (brows to chin) sits when the head fills the outline.
@@ -196,8 +214,10 @@ struct CaptureHint: Equatable {
             // Generous limits: PassPhoto crops afterwards, so the framing only has to be roughly right.
             if abs(tilt) > 6 { return hint("Hold the phone straight") }
             if abs(pitch) > 15 { return hint("Hold the phone upright, at eye level") }
-            if face.height < target.height * 0.7 { return hint("Move closer") }
-            if face.height > target.height * 1.4 { return hint("Move back a little") }
+            // Wide on the large side: at arm's length a selfie's face is bigger than the outline, and
+            // cropping takes care of the size.
+            if face.height < target.height * 0.65 { return hint("Move closer") }
+            if face.height > target.height * 1.9 { return hint("Move back a little") }
             // Say which way, so it's clear what to do.
             let dx = face.midX - target.midX, dy = face.midY - target.midY
             if abs(dy) > screen.height * 0.08 { return hint(dy > 0 ? "Raise the phone a little" : "Lower the phone a little") }
