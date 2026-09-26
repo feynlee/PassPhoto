@@ -5,10 +5,10 @@ struct AboutView: View {
     private var updater: RequirementsUpdater { .shared }
 
     private var requirementsFooter: String {
-        let base = "Every requirement is re-checked against its official page each quarter, and PassPhoto downloads updates on its own. Each document links to its official page and shows when it was last confirmed."
+        let base = String(localized: "Every requirement is re-checked against its official page each quarter, and PassPhoto downloads updates on its own. Each document links to its official page and shows when it was last confirmed.")
         switch updater.status {
-        case .updated: return "Updated to the latest requirements. " + base
-        case .upToDate: return "You have the latest requirements. " + base
+        case .updated: return String(localized: "Updated to the latest requirements. ") + base
+        case .upToDate: return String(localized: "You have the latest requirements. ") + base
         case .failed(let reason): return "\(reason) " + base
         default: return base
         }
@@ -40,7 +40,9 @@ struct AboutView: View {
 
                 Section {
                     LabeledContent("Documents", value: "\(SpecCatalog.all.count)")
-                    LabeledContent("Countries", value: "\(Set(SpecCatalog.all.map(\.countryCode)).count)")
+                    // "XX" is the international ICAO standard, not a place; the Schengen area counts as one.
+                    LabeledContent("Countries and areas", value: "\(Set(SpecCatalog.all.map(\.countryCode)).subtracting(["XX"]).count)")
+                    LabeledContent("Everywhere else") { Text("ICAO standard") }
                     if let asOf = updater.asOf {
                         LabeledContent("Requirements as of", value: asOf.formatted(date: .long, time: .omitted))
                     }

@@ -65,16 +65,16 @@ nonisolated enum BackgroundTone: String, CaseIterable, Sendable {
 
     var label: String {
         switch self {
-        case .white: "white"
-        case .offWhite: "off-white"
-        case .cream: "cream"
-        case .lightGrey: "light grey"
-        case .lightBlue: "light blue"
-        case .blue: "blue"
-        case .red: "red"
-        case .otherLight: "a light colour"
-        case .dark: "dark"
-        case .busy: "busy"
+        case .white: String(localized: "white")
+        case .offWhite: String(localized: "off-white")
+        case .cream: String(localized: "cream")
+        case .lightGrey: String(localized: "light grey")
+        case .lightBlue: String(localized: "light blue")
+        case .blue: String(localized: "blue")
+        case .red: String(localized: "red")
+        case .otherLight: String(localized: "a light colour")
+        case .dark: String(localized: "dark")
+        case .busy: String(localized: "busy")
         }
     }
 }
@@ -102,8 +102,8 @@ nonisolated enum ReviewEngine: String, Sendable {
 
     var label: String {
         switch self {
-        case .privateCloudCompute: "Private Cloud Compute"
-        case .onDevice: "on-device model"
+        case .privateCloudCompute: String(localized: "Private Cloud Compute")
+        case .onDevice: String(localized: "on-device model")
         }
     }
 }
@@ -119,10 +119,10 @@ nonisolated enum ReviewError: LocalizedError, Equatable {
         switch self {
         case .unavailable(let reason): reason
         case .quotaReached(let date):
-            date.map { "Private Cloud Compute’s daily limit is reached. It resets \($0.formatted(.relative(presentation: .named)))." }
-                ?? "Private Cloud Compute’s daily limit is reached."
-        case .network: "Private Cloud Compute couldn’t be reached."
-        case .noVision: "The model available on this iPhone can’t look at photos."
+            date.map { String(localized: "Private Cloud Compute’s daily limit is reached. It resets \($0.formatted(.relative(presentation: .named))).") }
+                ?? String(localized: "Private Cloud Compute’s daily limit is reached.")
+        case .network: String(localized: "Private Cloud Compute couldn’t be reached.")
+        case .noVision: String(localized: "The model available on this iPhone can’t look at photos.")
         case .failed(let message): message
         }
     }
@@ -202,9 +202,9 @@ actor PhotoReviewer {
         switch model.availability {
         case .available:
             return model.quotaUsage.isLimitReached ? ReviewError.quotaReached(resetDate: model.quotaUsage.resetDate).localizedDescription : nil
-        case .unavailable(.deviceNotEligible): return "This iPhone doesn’t support Private Cloud Compute."
-        case .unavailable(.systemNotReady): return "Apple Intelligence isn’t ready yet."
-        case .unavailable: return "Private Cloud Compute is unavailable."
+        case .unavailable(.deviceNotEligible): return String(localized: "This iPhone doesn’t support Private Cloud Compute.")
+        case .unavailable(.systemNotReady): return String(localized: "Apple Intelligence isn’t ready yet.")
+        case .unavailable: return String(localized: "Private Cloud Compute is unavailable.")
         }
     }
 
@@ -213,9 +213,9 @@ actor PhotoReviewer {
     private func withPrivateCloud<T>(_ body: (PrivateCloudComputeLanguageModel) async throws -> T) async throws -> T {
         switch pcc.availability {
         case .available: break
-        case .unavailable(.deviceNotEligible): throw ReviewError.unavailable("This iPhone doesn’t support Private Cloud Compute.")
-        case .unavailable(.systemNotReady): throw ReviewError.unavailable("Apple Intelligence isn’t ready yet.")
-        case .unavailable: throw ReviewError.unavailable("Private Cloud Compute is unavailable.")
+        case .unavailable(.deviceNotEligible): throw ReviewError.unavailable(String(localized: "This iPhone doesn’t support Private Cloud Compute."))
+        case .unavailable(.systemNotReady): throw ReviewError.unavailable(String(localized: "Apple Intelligence isn’t ready yet."))
+        case .unavailable: throw ReviewError.unavailable(String(localized: "Private Cloud Compute is unavailable."))
         }
         if pcc.quotaUsage.isLimitReached { throw ReviewError.quotaReached(resetDate: pcc.quotaUsage.resetDate) }
         guard pcc.capabilities.contains(.vision) else { throw ReviewError.noVision }
@@ -226,7 +226,7 @@ actor PhotoReviewer {
             switch error {
             case .networkFailure: throw ReviewError.network
             case .quotaLimitReached(let details): throw ReviewError.quotaReached(resetDate: details.resetDate)
-            case .serviceUnavailable: throw ReviewError.unavailable("Private Cloud Compute is unavailable.")
+            case .serviceUnavailable: throw ReviewError.unavailable(String(localized: "Private Cloud Compute is unavailable."))
             @unknown default: throw ReviewError.failed(String(describing: error))
             }
         } catch let error as LanguageModelError {
@@ -236,7 +236,7 @@ actor PhotoReviewer {
     }
 
     private func withOnDevice<T>(_ body: (SystemLanguageModel) async throws -> T) async throws -> T {
-        guard onDevice.isAvailable else { throw ReviewError.unavailable("Apple Intelligence isn’t available on this iPhone.") }
+        guard onDevice.isAvailable else { throw ReviewError.unavailable(String(localized: "Apple Intelligence isn’t available on this iPhone.")) }
         guard onDevice.capabilities.contains(.vision) else { throw ReviewError.noVision }
         do {
             return try await body(onDevice)

@@ -6,7 +6,7 @@ nonisolated enum PhotoLibrarySaver {
         case denied
 
         var errorDescription: String? {
-            "PassPhoto can’t add to your photo library. Allow it in Settings › Privacy & Security › Photos."
+            String(localized: "PassPhoto can’t add to your photo library. Allow it in Settings › Privacy & Security › Photos.")
         }
     }
 

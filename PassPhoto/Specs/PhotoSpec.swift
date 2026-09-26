@@ -11,12 +11,12 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
 
         var label: String {
             switch self {
-            case .passport: "Passports"
-            case .visa: "Visas"
-            case .id: "ID Cards"
-            case .residence: "Residence"
-            case .license: "Licenses"
-            case .other: "Other"
+            case .passport: String(localized: "Passports")
+            case .visa: String(localized: "Visas")
+            case .id: String(localized: "ID Cards")
+            case .residence: String(localized: "Residence")
+            case .license: String(localized: "Licenses")
+            case .other: String(localized: "Other")
             }
         }
     }
@@ -26,15 +26,15 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
 
         var requirement: String {
             switch self {
-            case .white: "Plain white"
-            case .whiteOrOffWhite: "Plain white or off-white"
-            case .creamOrLightGrey: "Plain cream or light grey"
-            case .lightGrey: "Plain light grey"
-            case .plainLight: "Plain and light-coloured"
-            case .lightNotWhite: "Plain light colour, not white"
-            case .lightBlue: "Plain light blue"
-            case .blue: "Plain blue"
-            case .red: "Plain red"
+            case .white: String(localized: "Plain white")
+            case .whiteOrOffWhite: String(localized: "Plain white or off-white")
+            case .creamOrLightGrey: String(localized: "Plain cream or light grey")
+            case .lightGrey: String(localized: "Plain light grey")
+            case .plainLight: String(localized: "Plain and light-coloured")
+            case .lightNotWhite: String(localized: "Plain light colour, not white")
+            case .lightBlue: String(localized: "Plain light blue")
+            case .blue: String(localized: "Plain blue")
+            case .red: String(localized: "Plain red")
             }
         }
     }
@@ -44,9 +44,9 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
 
         var requirement: String {
             switch self {
-            case .notAllowed: "Glasses aren’t allowed"
-            case .discouraged: "Remove glasses if you can"
-            case .allowed: "Glasses allowed without glare or tint"
+            case .notAllowed: String(localized: "Glasses aren’t allowed")
+            case .discouraged: String(localized: "Remove glasses if you can")
+            case .allowed: String(localized: "Glasses allowed without glare or tint")
             }
         }
     }
@@ -120,7 +120,7 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
 
     static let printDPI: Double = 600
 
-    var title: String { "\(country) \(document)" }
+    var title: String { String(localized: "\(country) \(document)", comment: "Country and document, e.g. United States Passport") }
     var aspect: Double { widthMM / heightMM }
 
     /// The country's flag, from its ISO code; a globe for the EU-wide and generic specs.
@@ -198,6 +198,39 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
              infant, source, verified, confidence, applicantPhoto, schema
     }
 
+    /// A country's name in the app's language. The data files name countries in English, which is kept for
+    /// English; other languages use the system's name for the region code.
+    static func localizedCountry(code: String, english: String) -> String {
+        switch code {
+        case "XX": return String(localized: "Other countries")
+        case "EU": return String(localized: "Schengen Area")
+        default:
+            guard let language = Bundle.main.preferredLocalizations.first, !language.hasPrefix("en") else { return english }
+            return Locale(identifier: language).localizedString(forRegionCode: code) ?? english
+        }
+    }
+
+    /// A document's name in the app's language; names not listed here stay as the data file has them.
+    static func localizedDocument(_ english: String) -> String {
+        switch english {
+        case "Passport": String(localized: "Passport")
+        case "Passport Card": String(localized: "Passport Card")
+        case "Passport & ID Card": String(localized: "Passport & ID Card")
+        case "Passport & Passport Card": String(localized: "Passport & Passport Card")
+        case "Passport (applying abroad)": String(localized: "Passport (applying abroad)")
+        case "Passport (New York Consulate)": String(localized: "Passport (New York Consulate)")
+        case "Internal Passport": String(localized: "Internal Passport")
+        case "Visa": String(localized: "Visa")
+        case "e-Visa", "E-Visa": String(localized: "e-Visa")
+        case "ID Card": String(localized: "ID Card")
+        case "OCI Card": String(localized: "OCI Card")
+        case "Permanent Resident Card": String(localized: "Permanent Resident Card")
+        case "USCIS (Green Card, Naturalization, EAD)": String(localized: "USCIS (Green Card, Naturalization, EAD)")
+        case "ICAO Standard": String(localized: "ICAO Standard")
+        default: english
+        }
+    }
+
     /// The newest entry format this app understands. Downloaded entries that need more are skipped.
     static let supportedSchema = 1
 
@@ -205,8 +238,8 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decode(String.self, forKey: .id)
         countryCode = try c.decode(String.self, forKey: .countryCode)
-        country = try c.decode(String.self, forKey: .country)
-        document = try c.decode(String.self, forKey: .document)
+        country = Self.localizedCountry(code: countryCode, english: try c.decode(String.self, forKey: .country))
+        document = Self.localizedDocument(try c.decode(String.self, forKey: .document))
         kind = try c.decodeIfPresent(Kind.self, forKey: .kind) ?? .other
         widthMM = try c.decode(Double.self, forKey: .widthMM)
         heightMM = try c.decode(Double.self, forKey: .heightMM)

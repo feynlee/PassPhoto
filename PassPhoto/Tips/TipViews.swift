@@ -91,10 +91,14 @@ struct SavedConfirmationCard: View {
     }
 
     private var detail: String {
-        var parts: [String] = []
-        if summary.toPhotos { parts.append(summary.printSheet ? "saved to Photos with a print sheet" : "saved to Photos") }
-        if summary.inApp { parts.append("kept in PassPhoto") }
-        return "“\(summary.fileName)” was \(parts.joined(separator: ", and "))."
+        let file = summary.fileName
+        return switch (summary.toPhotos, summary.printSheet, summary.inApp) {
+        case (true, true, true): String(localized: "“\(file)” was saved to Photos with a print sheet, and kept in PassPhoto.")
+        case (true, true, false): String(localized: "“\(file)” was saved to Photos with a print sheet.")
+        case (true, false, true): String(localized: "“\(file)” was saved to Photos, and kept in PassPhoto.")
+        case (true, false, false): String(localized: "“\(file)” was saved to Photos.")
+        default: String(localized: "“\(file)” was kept in PassPhoto.")
+        }
     }
 }
 

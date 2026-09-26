@@ -39,11 +39,11 @@ struct GuideOverlay: View {
             // Allowed bands, fixed to the frame.
             if let eye = spec.eyeLineFromBottomMM {
                 band(&context, from: frame.maxY - eye.upperBound * perMM, to: frame.maxY - eye.lowerBound * perMM,
-                     status: model.status(of: "eyes"), label: "Eyes")
+                     status: model.status(of: "eyes"), label: String(localized: "Eyes"))
             }
             if let margin = spec.topMarginMM {
                 band(&context, from: frame.minY + margin.lowerBound * perMM, to: frame.minY + margin.upperBound * perMM,
-                     status: model.status(of: "top"), label: "Top of head")
+                     status: model.status(of: "top"), label: String(localized: "Top of head"))
             }
 
             // Measured lines across the face.

@@ -8,10 +8,10 @@ enum CelebrationStyle: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .balloons: "Heart Balloons"
-        case .stamp: "Approved Stamp"
-        case .planes: "Paper Planes"
-        case .off: "Off"
+        case .balloons: String(localized: "Heart Balloons")
+        case .stamp: String(localized: "Approved Stamp")
+        case .planes: String(localized: "Paper Planes")
+        case .off: String(localized: "Off")
         }
     }
 

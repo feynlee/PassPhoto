@@ -46,7 +46,7 @@ nonisolated enum MeasureError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .noFace: "No face was found in this photo."
+        case .noFace: String(localized: "No face was found in this photo.")
         }
     }
 }

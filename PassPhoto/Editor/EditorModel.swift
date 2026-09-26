@@ -98,7 +98,7 @@ final class EditorModel {
             do {
                 measurement = try await reviewer.locateHead(image)
             } catch {
-                phase = .failed("No face was found. Choose a photo that shows your face clearly, looking at the camera.")
+                phase = .failed(String(localized: "No face was found. Choose a photo that shows your face clearly, looking at the camera."))
                 return
             }
         }
@@ -172,7 +172,7 @@ final class EditorModel {
         let source = region.isNull || region.isEmpty ? CGRect(origin: .zero, size: imageSize) : region
         let scale = min(1, 1024 / max(source.width, source.height))
         guard let preview = PhotoRenderer.render(image, crop: source, size: CGSize(width: (source.width * scale).rounded(), height: (source.height * scale).rounded())) else {
-            review = .unavailable("The photo couldn’t be prepared for review.")
+            review = .unavailable(String(localized: "The photo couldn’t be prepared for review."))
             return
         }
         do {
@@ -216,7 +216,7 @@ final class EditorModel {
     /// Whether the issuer accepts a photo made at home at all.
     var acceptanceCheck: CheckResult? {
         SpecNoticesSection.applicantMessage(spec).map {
-            CheckResult(id: "accepted", title: "Accepted from you", detail: $0, status: .fail, source: .measured)
+            CheckResult(id: "accepted", title: String(localized: "Accepted from you"), detail: $0, status: .fail, source: .measured)
         }
     }
 
@@ -248,7 +248,7 @@ final class EditorModel {
     enum SaveError: LocalizedError {
         case render
 
-        var errorDescription: String? { "The photo couldn’t be rendered." }
+        var errorDescription: String? { String(localized: "The photo couldn’t be rendered.") }
     }
 
     /// Saves the finished photo (and a print sheet, if asked) to the photo library, the app, or both.

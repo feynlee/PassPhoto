@@ -125,7 +125,7 @@ struct PhotoWorkspace: View {
                 pickerItem = nil
                 Task {
                     guard let data = try? await item.loadTransferable(type: Data.self), let image = UIImage(data: data) else {
-                        loadError = "That photo couldn’t be read."
+                        loadError = String(localized: "That photo couldn’t be read.")
                         return
                     }
                     load(image)
@@ -188,8 +188,8 @@ struct PhotoWorkspace: View {
     }
 
     private var babyLabel: String {
-        if let months = spec.infant?.maxAgeMonths { return "Baby under \(months) months" }
-        return "Photo of a baby"
+        if let months = spec.infant?.maxAgeMonths { return String(localized: "Baby under \(months) months") }
+        return String(localized: "Photo of a baby")
     }
 
     // MARK: With a photo
@@ -253,7 +253,7 @@ struct PhotoWorkspace: View {
 
     private func load(_ image: UIImage) {
         guard let normalized = PhotoRenderer.normalized(image) else {
-            loadError = "That photo couldn’t be read."
+            loadError = String(localized: "That photo couldn’t be read.")
             return
         }
         lastSpecID = spec.id
@@ -412,10 +412,10 @@ private struct StatusBar: View {
     private var summary: (text: String, status: CheckStatus) {
         let issues = model.openIssues
         if issues > 0 {
-            return ("\(issues) \(issues == 1 ? "thing" : "things") to fix", model.checks.contains { $0.status == .fail } ? .fail : .attention)
+            return (issues == 1 ? String(localized: "1 thing to fix") : String(localized: "\(issues) things to fix"), model.checks.contains { $0.status == .fail } ? .fail : .attention)
         }
-        if model.review == .running || model.review == .idle { return ("Checking the photo…", .pending) }
-        return ("Meets every requirement", .pass)
+        if model.review == .running || model.review == .idle { return (String(localized: "Checking the photo…"), .pending) }
+        return (String(localized: "Meets every requirement"), .pass)
     }
 }
 

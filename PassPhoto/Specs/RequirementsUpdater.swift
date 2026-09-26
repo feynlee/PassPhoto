@@ -98,9 +98,9 @@ final class RequirementsUpdater {
 
         var errorDescription: String? {
             switch self {
-            case .unreachable: "The requirements couldn’t be reached."
-            case .checksum(let path): "\(path) didn’t match its checksum."
-            case .noValidEntries(let path): "\(path) had no usable requirements."
+            case .unreachable: String(localized: "The requirements couldn’t be reached.")
+            case .checksum(let path): String(localized: "\(path) didn’t match its checksum.")
+            case .noValidEntries(let path): String(localized: "\(path) had no usable requirements.")
             }
         }
     }
@@ -130,10 +130,7 @@ final class RequirementsUpdater {
             // Only plain file names under requirements/ are accepted.
             let name = (file.path as NSString).lastPathComponent
             guard file.path == "requirements/\(name)", name.hasSuffix(".json") else { continue }
-            let data = try await Self.download(base.appending(path: file.path))
-            guard SHA256.hash(data: data).map({ String(format: "%02x", $0) }).joined() == file.sha256 else {
-                throw UpdateError.checksum(file.path)
-            }
+            let data = try await downloadVerified(file, preferring: base)
             guard try SpecCatalog.decode(data).contains(where: { if case .success = $0 { true } else { false } }) else {
                 throw UpdateError.noValidEntries(file.path)
             }
@@ -148,6 +145,23 @@ final class RequirementsUpdater {
         } else {
             try fileManager.moveItem(at: staging, to: target)
         }
+    }
+
+    /// One file whose checksum matches the manifest. The CDN caches each file of the branch on its own, so
+    /// for a while after a change it can serve a new manifest with an old file; then the next source is tried.
+    private func downloadVerified(_ file: RequirementsManifest.File, preferring base: URL) async throws -> Data {
+        var mismatched = false
+        for source in [base] + Self.sources.filter({ $0 != base }) {
+            do {
+                let data = try await Self.download(source.appending(path: file.path))
+                if SHA256.hash(data: data).map({ String(format: "%02x", $0) }).joined() == file.sha256 { return data }
+                mismatched = true
+                logger.notice("\(file.path, privacy: .public) from \(source.host() ?? "", privacy: .public) is out of date")
+            } catch {
+                logger.notice("\(file.path, privacy: .public) from \(source.host() ?? "", privacy: .public) failed: \(error.localizedDescription, privacy: .public)")
+            }
+        }
+        throw mismatched ? UpdateError.checksum(file.path) : UpdateError.unreachable
     }
 
     nonisolated private static func download(_ url: URL) async throws -> Data {

@@ -16,29 +16,29 @@ enum SpecInstructions {
         if baby != nil {
             steps.append(Instruction(
                 id: "baby", symbol: "figure.and.child.holdinghands",
-                text: "Lay your baby on a plain sheet, or support them so that no hands or arms show."
+                text: String(localized: "Lay your baby on a plain sheet, or support them so that no hands or arms show.")
             ))
         }
         steps += [
             Instruction(id: "background", symbol: "person.and.background.dotted",
-                        text: "Stand in front of a plain \(backgroundPhrase(spec.background)) wall, with nothing behind you."),
+                        text: String(localized: "Stand in front of a plain \(backgroundPhrase(spec.background)) wall, with nothing behind you.")),
             Instruction(id: "clothes", symbol: "tshirt",
-                        text: "Wear everyday clothes in a colour that stands out from the background. No uniforms."),
+                        text: String(localized: "Wear everyday clothes in a colour that stands out from the background. No uniforms.")),
             Instruction(id: "glasses", symbol: "eyeglasses", text: glassesText(spec.glasses)),
             Instruction(id: "expression", symbol: "face.dashed",
                         text: baby?.mouthMayBeOpen == true
-                            ? "Neutral expression. A baby’s mouth may be open."
-                            : "Neutral expression with your mouth closed. Don’t smile."),
+                            ? String(localized: "Neutral expression. A baby’s mouth may be open.")
+                            : String(localized: "Neutral expression with your mouth closed. Don’t smile.")),
             Instruction(id: "eyes", symbol: "eye",
                         text: baby?.eyesMayBeClosed == true
-                            ? "Eyes open if possible; a baby’s eyes may be closed. Look straight at the camera."
-                            : "Eyes open and looking straight at the camera, with hair away from your eyes."),
+                            ? String(localized: "Eyes open if possible; a baby’s eyes may be closed. Look straight at the camera.")
+                            : String(localized: "Eyes open and looking straight at the camera, with hair away from your eyes.")),
             Instruction(id: "head", symbol: "person.crop.circle",
-                        text: "No hat or headband. Religious or medical head coverings are fine if your whole face shows."),
+                        text: String(localized: "No hat or headband. Religious or medical head coverings are fine if your whole face shows.")),
             Instruction(id: "light", symbol: "sun.max",
-                        text: "Face soft, even light, like a window in front of you. No shadows on your face or the wall, and no flash."),
+                        text: String(localized: "Face soft, even light, like a window in front of you. No shadows on your face or the wall, and no flash.")),
             Instruction(id: "camera", symbol: "camera",
-                        text: "Have someone else take it with the back camera, about 1.5 m away, at eye level."),
+                        text: String(localized: "Have someone else take it with the back camera, about 1.5 m away, at eye level.")),
         ]
         steps += (baby?.notes ?? []).enumerated().map { Instruction(id: "babynote\($0.offset)", symbol: "info.circle", text: $0.element) }
         return steps
@@ -46,23 +46,23 @@ enum SpecInstructions {
 
     static func backgroundPhrase(_ background: PhotoSpec.Background) -> String {
         switch background {
-        case .white: "white"
-        case .whiteOrOffWhite: "white or off-white"
-        case .creamOrLightGrey: "cream or light grey"
-        case .lightGrey: "light grey"
-        case .plainLight: "light-coloured"
-        case .lightNotWhite: "light-coloured (not white)"
-        case .lightBlue: "light blue"
-        case .blue: "blue"
-        case .red: "red"
+        case .white: String(localized: "white")
+        case .whiteOrOffWhite: String(localized: "white or off-white")
+        case .creamOrLightGrey: String(localized: "cream or light grey")
+        case .lightGrey: String(localized: "light grey")
+        case .plainLight: String(localized: "light-coloured")
+        case .lightNotWhite: String(localized: "light-coloured (not white)")
+        case .lightBlue: String(localized: "light blue")
+        case .blue: String(localized: "blue")
+        case .red: String(localized: "red")
         }
     }
 
     static func glassesText(_ glasses: PhotoSpec.Glasses) -> String {
         switch glasses {
-        case .notAllowed: "Take off your glasses."
-        case .discouraged: "Take off your glasses if you can. If you keep them on: no tint and no glare."
-        case .allowed: "Glasses are fine without tint or glare, and with your eyes fully visible."
+        case .notAllowed: String(localized: "Take off your glasses.")
+        case .discouraged: String(localized: "Take off your glasses if you can. If you keep them on: no tint and no glare.")
+        case .allowed: String(localized: "Glasses are fine without tint or glare, and with your eyes fully visible.")
         }
     }
 }
@@ -96,7 +96,7 @@ struct SpecificationsSection: View {
         let head = infant ? spec.forInfant().headHeightMM : spec.headHeightMM
         Section {
             LabeledContent("Photo size", value: spec.sizeLabel)
-            LabeledContent("Head, chin to top of \(spec.headTop == .crown ? "skull" : "hair")", value: head.formattedMM())
+            LabeledContent(spec.headTop == .crown ? "Head, chin to top of skull" : "Head, chin to top of hair", value: head.formattedMM())
             if let eye = spec.eyeLineFromBottomMM {
                 LabeledContent("Eyes from bottom edge", value: eye.formattedMM())
             }
@@ -158,9 +158,9 @@ struct SpecNoticesSection: View {
         switch spec.applicantPhoto {
         case .accepted: nil
         case .certifiedPhotographerOnly:
-            "\(spec.country) only accepts photos taken at the office or sent digitally by a certified photographer. A photo you make yourself may be refused."
+            String(localized: "\(spec.country) only accepts photos taken at the office or sent digitally by a certified photographer. A photo you make yourself may be refused.")
         case .officeOnly:
-            "\(spec.country) takes this photo at the office. You don’t need to bring one."
+            String(localized: "\(spec.country) takes this photo at the office. You don’t need to bring one.")
         }
     }
 }

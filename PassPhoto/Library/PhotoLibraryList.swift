@@ -72,7 +72,7 @@ struct PhotoLibraryList: View {
         do {
             let data = try Data(contentsOf: photo.fileURL)
             try await PhotoLibrarySaver.save(data, fileName: photo.exportFileName)
-            return "Saved to Photos"
+            return String(localized: "Saved to Photos")
         } catch {
             return error.localizedDescription
         }

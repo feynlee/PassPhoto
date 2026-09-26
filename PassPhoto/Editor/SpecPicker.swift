@@ -87,7 +87,7 @@ struct SpecList: View {
             if groups.isEmpty { ContentUnavailableView.search(text: query) }
         }
         .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Country or document")
-        .navigationTitle(title ?? "\(SpecCatalog.all.count) Photo Requirements")
+        .navigationTitle(title ?? String(localized: "\(SpecCatalog.all.count) Photo Requirements"))
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -100,7 +100,12 @@ struct SpecList: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(showCountry ? "\(spec.flag)  \(spec.title)" : spec.document)
                         .foregroundStyle(.primary)
-                    Text("\(spec.sizeLabel) · head \(spec.headHeightMM.formattedMM())\(spec.infant != nil ? " · baby rules" : "")\(spec.id == defaultID ? " · default" : "")")
+                    Text([
+                        spec.sizeLabel,
+                        String(localized: "head \(spec.headHeightMM.formattedMM())"),
+                        spec.infant != nil ? String(localized: "baby rules") : nil,
+                        spec.id == defaultID ? String(localized: "default") : nil,
+                    ].compactMap { $0 }.joined(separator: " · "))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

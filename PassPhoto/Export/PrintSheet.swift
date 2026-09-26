@@ -12,8 +12,8 @@ nonisolated enum PrintSheet {
 
         var label: String {
             switch self {
-            case .fourBySix: "4 × 6 in"
-            case .tenByFifteen: "10 × 15 cm"
+            case .fourBySix: String(localized: "4 × 6 in")
+            case .tenByFifteen: String(localized: "10 × 15 cm")
             }
         }
 

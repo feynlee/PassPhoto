@@ -1,0 +1,3480 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    " Move the photo down." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请将照片下移。"
+          }
+        }
+      }
+    },
+    " Move the photo up." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请将照片上移。"
+          }
+        }
+      }
+    },
+    " The top of the head was estimated; line it up with the guide." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头顶位置为估算值，请对齐参考线。"
+          }
+        }
+      }
+    },
+    " Zoom in." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请放大。"
+          }
+        }
+      }
+    },
+    " Zoom out." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请缩小。"
+          }
+        }
+      }
+    },
+    "“%@” was kept in PassPhoto." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”已保留在 PassPhoto 中。"
+          }
+        }
+      }
+    },
+    "“%@” was saved to Photos with a print sheet, and kept in PassPhoto." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”已连同冲印版存储到“照片”，并保留在 PassPhoto 中。"
+          }
+        }
+      }
+    },
+    "“%@” was saved to Photos with a print sheet." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”已连同冲印版存储到“照片”。"
+          }
+        }
+      }
+    },
+    "“%@” was saved to Photos, and kept in PassPhoto." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”已存储到“照片”，并保留在 PassPhoto 中。"
+          }
+        }
+      }
+    },
+    "“%@” was saved to Photos." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@”已存储到“照片”。"
+          }
+        }
+      }
+    },
+    "%@  %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@  %2$@"
+          }
+        }
+      }
+    },
+    "%@ · %lld copies" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld 张"
+          }
+        }
+      }
+    },
+    "%@ · rules as of %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · 规定截至 %2$@"
+          }
+        }
+      }
+    },
+    "%@ %@" : {
+      "comment" : "Country and document, e.g. United States Passport",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@%2$@"
+          }
+        }
+      }
+    },
+    "%@ %@ · %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@%2$@ · %3$@"
+          }
+        }
+      }
+    },
+    "%@ %@; needs %@." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$@ %1$@；要求 %3$@。"
+          }
+        }
+      }
+    },
+    "%@ and isn’t plain: there’s a pattern, texture or something behind you. Needs: %@." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@，且不是纯色：身后有图案、纹理或物体。要求：%2$@。"
+          }
+        }
+      }
+    },
+    "%@ Check these yourself." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@请自行检查以下项目。"
+          }
+        }
+      }
+    },
+    "%@ didn’t match its checksum." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 的校验和不匹配。"
+          }
+        }
+      }
+    },
+    "%@ doesn’t allow glasses. Take them off." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@不允许戴眼镜，请摘下。"
+          }
+        }
+      }
+    },
+    "%@ had no usable requirements." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 中没有可用的规格。"
+          }
+        }
+      }
+    },
+    "%@ has separate rules for babies. Turn this on to use them for the instructions, guides and checks." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@对婴儿有单独的规定。打开此选项后，说明、参考线和检查项都会使用婴儿规定。"
+          }
+        }
+      }
+    },
+    "%@ only accepts photos taken at the office or sent digitally by a certified photographer. A photo you make yourself may be refused." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@只接受在受理点拍摄或由认证摄影师以电子方式提交的照片。自己制作的照片可能会被拒收。"
+          }
+        }
+      }
+    },
+    "%@ rules changed after this photo was made (now as of %@). Adjust it to check it against the new rules." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "制作此照片后，%1$@的规定已更新（现为 %2$@ 版本）。调整照片即可按新规定重新检查。"
+          }
+        }
+      }
+    },
+    "%@ takes this photo at the office. You don’t need to bring one." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@会在受理点现场拍摄此照片，你无需自带。"
+          }
+        }
+      }
+    },
+    "%@, print sheet" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@，冲印版"
+          }
+        }
+      }
+    },
+    "%@, with no shadows." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@，无阴影。"
+          }
+        }
+      }
+    },
+    "%@; replaced with %@ as required. Turn off Replace Background to keep the original." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@；已按要求替换为%2$@。关闭“替换背景”即可保留原背景。"
+          }
+        }
+      }
+    },
+    "%@." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@。"
+          }
+        }
+      }
+    },
+    "%@. Needs: %@." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@。要求：%2$@。"
+          }
+        }
+      }
+    },
+    "%lld × %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld × %2$@"
+          }
+        }
+      }
+    },
+    "%lld checks need a look. You can still save, but the photo may be rejected." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有 %lld 项需要留意。你仍可存储，但照片可能会被拒收。"
+          }
+        }
+      }
+    },
+    "%lld checks needed a look when saved." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储时有 %lld 项需要留意。"
+          }
+        }
+      }
+    },
+    "%lld faces were found. Only the applicant can be in the photo." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检测到 %lld 张人脸。照片中只能有申请人本人。"
+          }
+        }
+      }
+    },
+    "%lld Photo Requirements" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 种照片规定"
+          }
+        }
+      }
+    },
+    "%lld pixels across; sharp enough to print." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宽 %lld 像素，清晰度足够冲印。"
+          }
+        }
+      }
+    },
+    "%lld things to fix" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 项需要修正"
+          }
+        }
+      }
+    },
+    "%lld to review" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 项待查看"
+          }
+        }
+      }
+    },
+    "%lld%% of the frame is past the photo’s edge and will be white. Retake with more space around you, or zoom in." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画框有 %lld%% 超出了照片边缘，这部分将显示为白色。请在周围留出更多空间重拍，或放大照片。"
+          }
+        }
+      }
+    },
+    "★ PASSPHOTO ★" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "★ PASSPHOTO ★"
+          }
+        }
+      }
+    },
+    "1 check needed a look when saved." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储时有 1 项需要留意。"
+          }
+        }
+      }
+    },
+    "1 check needs a look. You can still save, but the photo may be rejected." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有 1 项需要留意。你仍可存储，但照片可能会被拒收。"
+          }
+        }
+      }
+    },
+    "1 thing to fix" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 项需要修正"
+          }
+        }
+      }
+    },
+    "4 × 6 in" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4 × 6 英寸"
+          }
+        }
+      }
+    },
+    "10 × 15 cm" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10 × 15 厘米"
+          }
+        }
+      }
+    },
+    "a light colour" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "浅色"
+          }
+        }
+      }
+    },
+    "About" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于"
+          }
+        }
+      }
+    },
+    "About PassPhoto" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于 PassPhoto"
+          }
+        }
+      }
+    },
+    "above the head" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头顶上方"
+          }
+        }
+      }
+    },
+    "Accepted from you" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由你确认"
+          }
+        }
+      }
+    },
+    "Adjust" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调整"
+          }
+        }
+      }
+    },
+    "Adjust Crop or Country" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调整裁剪或国家/地区"
+          }
+        }
+      }
+    },
+    "Adjust Photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调整照片"
+          }
+        }
+      }
+    },
+    "Allow camera access for PassPhoto in Settings, or choose a photo from your library instead." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请在“设置”中允许 PassPhoto 访问相机，或改为从图库中选取照片。"
+          }
+        }
+      }
+    },
+    "Another coffee?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再请一杯咖啡？"
+          }
+        }
+      }
+    },
+    "Apple Intelligence isn’t available on this iPhone." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此 iPhone 不支持 Apple 智能。"
+          }
+        }
+      }
+    },
+    "Apple Intelligence isn’t ready yet." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple 智能尚未准备就绪。"
+          }
+        }
+      }
+    },
+    "Approved Stamp" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过印章"
+          }
+        }
+      }
+    },
+    "Auto Crop" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动裁剪"
+          }
+        }
+      }
+    },
+    "Baby" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "婴儿"
+          }
+        }
+      }
+    },
+    "baby rules" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "婴儿规定"
+          }
+        }
+      }
+    },
+    "Baby under %lld months" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 个月以下婴儿"
+          }
+        }
+      }
+    },
+    "Background" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "背景"
+          }
+        }
+      }
+    },
+    "blue" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝色"
+          }
+        }
+      }
+    },
+    "Both eyes need to be open and visible." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "双眼需睁开且清晰可见。"
+          }
+        }
+      }
+    },
+    "Both eyes open and visible." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "双眼睁开且清晰可见。"
+          }
+        }
+      }
+    },
+    "busy" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "杂乱"
+          }
+        }
+      }
+    },
+    "Buy Me a Coffee" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请我喝杯咖啡"
+          }
+        }
+      }
+    },
+    "Camera Access Is Off" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "相机访问已关闭"
+          }
+        }
+      }
+    },
+    "Can’t Fit This Photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法适配此照片"
+          }
+        }
+      }
+    },
+    "Can’t Open Photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法打开照片"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        }
+      }
+    },
+    "Celebration when you save" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储时的庆祝动画"
+          }
+        }
+      }
+    },
+    "Centre your face in the outline" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请将脸部置于轮廓中央"
+          }
+        }
+      }
+    },
+    "Centred" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "居中"
+          }
+        }
+      }
+    },
+    "Check for Updates" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查更新"
+          }
+        }
+      }
+    },
+    "Check yourself" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请自行检查"
+          }
+        }
+      }
+    },
+    "Checked by the %@. The photo is processed privately and isn’t stored." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由%@检查。照片会以私密方式处理，不会被存储。"
+          }
+        }
+      }
+    },
+    "Checking the photo…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在检查照片…"
+          }
+        }
+      }
+    },
+    "Checking with Private Cloud Compute…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在通过私密云计算检查…"
+          }
+        }
+      }
+    },
+    "Checks" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查项"
+          }
+        }
+      }
+    },
+    "cheek to cheek" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "两颊之间"
+          }
+        }
+      }
+    },
+    "chin to top of head" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下巴至头顶"
+          }
+        }
+      }
+    },
+    "Choose another country or document" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择其他国家/地区或证件"
+          }
+        }
+      }
+    },
+    "Choose from Library" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从图库中选取"
+          }
+        }
+      }
+    },
+    "Clear glasses with no glare." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "透明镜片，无反光。"
+          }
+        }
+      }
+    },
+    "Close" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        }
+      }
+    },
+    "Closed eyes are allowed for babies." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "婴儿可以闭眼。"
+          }
+        }
+      }
+    },
+    "Compressed to %lld KB or less for upload." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已压缩至 %lld KB 以内以便上传。"
+          }
+        }
+      }
+    },
+    "Copies at true size with cut marks, to print at a pharmacy or photo kiosk. Saved to Photos next to the photo." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按实际尺寸排版并带裁切线，可在冲印店或自助冲印机打印。与照片一起存入“照片”App。"
+          }
+        }
+      }
+    },
+    "Copies you saved to Photos stay there." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已存入“照片”App 的副本会保留。"
+          }
+        }
+      }
+    },
+    "Couldn’t Save" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法存储"
+          }
+        }
+      }
+    },
+    "Countries and areas" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "国家和地区"
+          }
+        }
+      }
+    },
+    "Country or document" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "国家/地区或证件"
+          }
+        }
+      }
+    },
+    "cream" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "米色"
+          }
+        }
+      }
+    },
+    "cream or light grey" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "米色或浅灰色"
+          }
+        }
+      }
+    },
+    "Created" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建时间"
+          }
+        }
+      }
+    },
+    "Custom" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定"
+          }
+        }
+      }
+    },
+    "dark" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "深色"
+          }
+        }
+      }
+    },
+    "default" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认"
+          }
+        }
+      }
+    },
+    "Default" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认"
+          }
+        }
+      }
+    },
+    "Default document" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "默认证件"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除"
+          }
+        }
+      }
+    },
+    "Delete “%@”?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除“%@”？"
+          }
+        }
+      }
+    },
+    "Delete Photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除照片"
+          }
+        }
+      }
+    },
+    "Document" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "证件"
+          }
+        }
+      }
+    },
+    "Document: %@, %@, requirements as of %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "证件：%1$@，%2$@，规定截至 %3$@"
+          }
+        }
+      }
+    },
+    "Documents" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "证件"
+          }
+        }
+      }
+    },
+    "Doesn’t meet the requirement" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不符合要求"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        }
+      }
+    },
+    "Drag to move, pinch to zoom, double-tap for the automatic crop." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拖移以移动，双指捏合以缩放，连按两下以自动裁剪。"
+          }
+        }
+      }
+    },
+    "e-Visa" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电子签证"
+          }
+        }
+      }
+    },
+    "Enjoying PassPhoto? A tip is appreciated." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "喜欢 PassPhoto 吗？欢迎打赏支持。"
+          }
+        }
+      }
+    },
+    "Even light on the face, no shadows or flash glare." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脸部光线均匀，无阴影或闪光灯反光。"
+          }
+        }
+      }
+    },
+    "Even, with no shadows on the face." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "光线均匀，脸上无阴影。"
+          }
+        }
+      }
+    },
+    "Every requirement is re-checked against its official page each quarter, and PassPhoto downloads updates on its own. Each document links to its official page and shows when it was last confirmed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每项规定每季度都会对照官方页面重新核查，PassPhoto 会自动下载更新。每种证件都附有官方页面链接，并显示上次确认的日期。"
+          }
+        }
+      }
+    },
+    "Everywhere else" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他地区"
+          }
+        }
+      }
+    },
+    "Eye height" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "眼睛高度"
+          }
+        }
+      }
+    },
+    "Eyes" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "眼睛"
+          }
+        }
+      }
+    },
+    "Eyes from bottom edge" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "眼睛距底边"
+          }
+        }
+      }
+    },
+    "Eyes open" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睁眼"
+          }
+        }
+      }
+    },
+    "Eyes open and looking straight at the camera, with hair away from your eyes." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "睁开双眼，直视镜头，头发不要遮住眼睛。"
+          }
+        }
+      }
+    },
+    "Eyes open if possible; a baby’s eyes may be closed. Look straight at the camera." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尽量睁开眼睛（婴儿可以闭眼），直视镜头。"
+          }
+        }
+      }
+    },
+    "Face soft, even light, like a window in front of you. No shadows on your face or the wall, and no flash." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "面向柔和均匀的光线，例如面前的窗户。脸上和墙上都不要有阴影，也不要使用闪光灯。"
+          }
+        }
+      }
+    },
+    "Face width" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脸部宽度"
+          }
+        }
+      }
+    },
+    "Faces, crops and backgrounds are measured on this iPhone. Only the quality check goes to Apple’s Private Cloud Compute, which processes the photo privately and doesn’t keep it. Nothing is sent to PassPhoto or anyone else." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人脸、裁剪和背景都在这台 iPhone 上测量。只有质量检查会交给 Apple 的私密云计算，它以私密方式处理照片且不会保留。任何内容都不会发送给 PassPhoto 或其他任何人。"
+          }
+        }
+      }
+    },
+    "Facing the camera" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正对镜头"
+          }
+        }
+      }
+    },
+    "File name" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件名"
+          }
+        }
+      }
+    },
+    "Find more light" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请到光线更充足的地方"
+          }
+        }
+      }
+    },
+    "Finding your face…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在寻找人脸…"
+          }
+        }
+      }
+    },
+    "Fix the checks marked below to save" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请修正下方标出的项目后再存储"
+          }
+        }
+      }
+    },
+    "Fix these to save · See all checks" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修正这些项目后即可存储 · 查看全部检查项"
+          }
+        }
+      }
+    },
+    "For" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "适用于"
+          }
+        }
+      }
+    },
+    "from the bottom edge" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "距底边"
+          }
+        }
+      }
+    },
+    "Glasses" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "眼镜"
+          }
+        }
+      }
+    },
+    "Glasses allowed without glare or tint" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可戴眼镜，但不能有反光或有色镜片"
+          }
+        }
+      }
+    },
+    "Glasses are discouraged. Take them off if you can." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不建议戴眼镜，能摘下就摘下。"
+          }
+        }
+      }
+    },
+    "Glasses are fine without tint or glare, and with your eyes fully visible." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可以戴眼镜，但不能有色镜片或反光，双眼须完全可见。"
+          }
+        }
+      }
+    },
+    "Glasses aren’t allowed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不允许戴眼镜"
+          }
+        }
+      }
+    },
+    "Hair or something else covers part of the face." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头发或其他物品遮住了部分脸部。"
+          }
+        }
+      }
+    },
+    "Have someone else take it with the back camera, about 1.5 m away, at eye level." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请他人用后置相机在约 1.5 米外、与眼睛同高的位置拍摄。"
+          }
+        }
+      }
+    },
+    "head %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头部 %@"
+          }
+        }
+      }
+    },
+    "Head level" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头部端正"
+          }
+        }
+      }
+    },
+    "Head size" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头部大小"
+          }
+        }
+      }
+    },
+    "Head, chin to top of hair" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头部（下巴至头发顶部）"
+          }
+        }
+      }
+    },
+    "Head, chin to top of skull" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头部（下巴至头骨顶部）"
+          }
+        }
+      }
+    },
+    "Heart Balloons" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "爱心气球"
+          }
+        }
+      }
+    },
+    "Hides the tip options" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐藏打赏选项"
+          }
+        }
+      }
+    },
+    "Hold the phone straight" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请将手机摆正"
+          }
+        }
+      }
+    },
+    "Hold the phone upright, at eye level" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请竖直拿稳手机，与眼睛同高"
+          }
+        }
+      }
+    },
+    "How to Take It" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拍摄方法"
+          }
+        }
+      }
+    },
+    "ICAO standard" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ICAO 标准"
+          }
+        }
+      }
+    },
+    "ICAO Standard" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ICAO 标准"
+          }
+        }
+      }
+    },
+    "ID Card" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "身份证"
+          }
+        }
+      }
+    },
+    "ID Cards" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "身份证件"
+          }
+        }
+      }
+    },
+    "In focus." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "对焦清晰。"
+          }
+        }
+      }
+    },
+    "Internal Passport" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "国内护照"
+          }
+        }
+      }
+    },
+    "Keep in PassPhoto" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留在 PassPhoto 中"
+          }
+        }
+      }
+    },
+    "Last checked for updates" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上次检查更新"
+          }
+        }
+      }
+    },
+    "Lay your baby on a plain sheet, or support them so that no hands or arms show." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "让宝宝躺在纯色床单上，或扶住宝宝，但不要让手或手臂入镜。"
+          }
+        }
+      }
+    },
+    "Licenses" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "驾照"
+          }
+        }
+      }
+    },
+    "light blue" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "浅蓝色"
+          }
+        }
+      }
+    },
+    "light grey" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "浅灰色"
+          }
+        }
+      }
+    },
+    "light-coloured" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "浅色"
+          }
+        }
+      }
+    },
+    "light-coloured (not white)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "浅色（非白色）"
+          }
+        }
+      }
+    },
+    "Lighting" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "光线"
+          }
+        }
+      }
+    },
+    "Look at the camera" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请看向镜头"
+          }
+        }
+      }
+    },
+    "Looking straight at the camera." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "直视镜头。"
+          }
+        }
+      }
+    },
+    "Looks good — take the photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "很好，可以拍了"
+          }
+        }
+      }
+    },
+    "Looks unedited." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "看起来未经编辑。"
+          }
+        }
+      }
+    },
+    "Lower the phone a little" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请将手机稍微放低"
+          }
+        }
+      }
+    },
+    "Make default document" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设为默认证件"
+          }
+        }
+      }
+    },
+    "Measured on this iPhone. Only cropping and scaling are applied; the photo itself isn’t changed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在这台 iPhone 上测量。只进行裁剪和缩放，照片本身不会被修改。"
+          }
+        }
+      }
+    },
+    "Measurements" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "测量"
+          }
+        }
+      }
+    },
+    "Meets every requirement" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "符合全部要求"
+          }
+        }
+      }
+    },
+    "Mouth closed, both eyes open, no smile." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "闭嘴，双眼睁开，不要微笑。"
+          }
+        }
+      }
+    },
+    "Move back a little" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请稍微后退"
+          }
+        }
+      }
+    },
+    "Move closer" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请靠近一些"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称"
+          }
+        }
+      }
+    },
+    "Needs a look" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要留意"
+          }
+        }
+      }
+    },
+    "Needs: %@." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要求：%@。"
+          }
+        }
+      }
+    },
+    "Neutral expression" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表情自然"
+          }
+        }
+      }
+    },
+    "Neutral expression with your mouth closed. Don’t smile." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表情自然，闭上嘴，不要微笑。"
+          }
+        }
+      }
+    },
+    "Neutral expression. A baby’s mouth may be open." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表情自然。婴儿可以张嘴。"
+          }
+        }
+      }
+    },
+    "Neutral, mouth closed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表情自然，嘴巴闭合。"
+          }
+        }
+      }
+    },
+    "New Photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新照片"
+          }
+        }
+      }
+    },
+    "No background shadow" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "背景无阴影"
+          }
+        }
+      }
+    },
+    "No face was found in this photo." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此照片中未找到人脸。"
+          }
+        }
+      }
+    },
+    "No face was found. Choose a photo that shows your face clearly, looking at the camera." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到人脸。请选择一张能清楚看到脸部、且正视镜头的照片。"
+          }
+        }
+      }
+    },
+    "No glasses." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未戴眼镜。"
+          }
+        }
+      }
+    },
+    "No hat or headband. Religious or medical head coverings are fine if your whole face shows." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不要戴帽子或发带。宗教或医疗原因的头部遮盖物可以佩戴，但须露出整张脸。"
+          }
+        }
+      }
+    },
+    "No head covering" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未戴头饰"
+          }
+        }
+      }
+    },
+    "No Photos Yet" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还没有照片"
+          }
+        }
+      }
+    },
+    "No shadow behind you." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "身后没有阴影。"
+          }
+        }
+      }
+    },
+    "No uploads, no account" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无需上传，无需账户"
+          }
+        }
+      }
+    },
+    "None" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无"
+          }
+        }
+      }
+    },
+    "Nothing else in frame" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画面中无其他物体"
+          }
+        }
+      }
+    },
+    "Nothing on the head." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头上没有饰物。"
+          }
+        }
+      }
+    },
+    "OCI Card" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OCI 卡"
+          }
+        }
+      }
+    },
+    "Off" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        }
+      }
+    },
+    "off-white" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "米白色"
+          }
+        }
+      }
+    },
+    "Official photo rules" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "官方照片规定"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好"
+          }
+        }
+      }
+    },
+    "on-device model" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设备端模型"
+          }
+        }
+      }
+    },
+    "Only %lld pixels across; %lld are needed. Move closer or use the back camera." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宽度只有 %1$lld 像素，需要 %2$lld 像素。请靠近一些或使用后置相机。"
+          }
+        }
+      }
+    },
+    "Only one person in the photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片中只能有一个人"
+          }
+        }
+      }
+    },
+    "Only what’s needed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只做必要的修改"
+          }
+        }
+      }
+    },
+    "Only you" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅限本人"
+          }
+        }
+      }
+    },
+    "Only you in the photo." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片中只有你本人。"
+          }
+        }
+      }
+    },
+    "Open Settings" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开设置"
+          }
+        }
+      }
+    },
+    "Other" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他"
+          }
+        }
+      }
+    },
+    "Other countries" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他国家/地区"
+          }
+        }
+      }
+    },
+    "Paper Planes" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纸飞机"
+          }
+        }
+      }
+    },
+    "Passes" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "符合要求"
+          }
+        }
+      }
+    },
+    "PassPhoto" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PassPhoto"
+          }
+        }
+      }
+    },
+    "PassPhoto can’t add to your photo library. Allow it in Settings › Privacy & Security › Photos." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PassPhoto 无法添加到你的照片图库。请在“设置”>“隐私与安全性”>“照片”中允许访问。"
+          }
+        }
+      }
+    },
+    "Passport" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "护照"
+          }
+        }
+      }
+    },
+    "Passport (applying abroad)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "护照（在境外申请）"
+          }
+        }
+      }
+    },
+    "Passport (New York Consulate)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "护照（纽约领事馆）"
+          }
+        }
+      }
+    },
+    "Passport & ID Card" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "护照和身份证"
+          }
+        }
+      }
+    },
+    "Passport & Passport Card" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "护照和护照卡"
+          }
+        }
+      }
+    },
+    "Passport Card" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "护照卡"
+          }
+        }
+      }
+    },
+    "Passports" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "护照"
+          }
+        }
+      }
+    },
+    "Permanent Resident Card" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "永久居民卡"
+          }
+        }
+      }
+    },
+    "Phone is level" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手机已放平"
+          }
+        }
+      }
+    },
+    "Phone is tilted" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手机倾斜"
+          }
+        }
+      }
+    },
+    "Photo fills the frame" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片填满画框"
+          }
+        }
+      }
+    },
+    "Photo in the %@ frame" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 画框中的照片"
+          }
+        }
+      }
+    },
+    "Photo of a baby" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "婴儿照片"
+          }
+        }
+      }
+    },
+    "Photo Quality" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片质量"
+          }
+        }
+      }
+    },
+    "Photo Saved" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片已存储"
+          }
+        }
+      }
+    },
+    "Photo size" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片尺寸"
+          }
+        }
+      }
+    },
+    "Photos are cropped and scaled. The background is replaced only when it breaks the rules, and you can turn that off. Faces are never retouched." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片只会被裁剪和缩放。只有在背景不符合规定时才会替换背景，你也可以关闭此功能。绝不修饰人脸。"
+          }
+        }
+      }
+    },
+    "Pixels" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "像素"
+          }
+        }
+      }
+    },
+    "Plain and light-coloured" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纯色浅色"
+          }
+        }
+      }
+    },
+    "Plain blue" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纯蓝色"
+          }
+        }
+      }
+    },
+    "Plain cream or light grey" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纯米色或浅灰色"
+          }
+        }
+      }
+    },
+    "Plain light blue" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纯浅蓝色"
+          }
+        }
+      }
+    },
+    "Plain light colour, not white" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纯浅色，非白色"
+          }
+        }
+      }
+    },
+    "Plain light grey" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纯浅灰色"
+          }
+        }
+      }
+    },
+    "Plain red" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纯红色"
+          }
+        }
+      }
+    },
+    "Plain white" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纯白色"
+          }
+        }
+      }
+    },
+    "Plain white or off-white" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纯白色或米白色"
+          }
+        }
+      }
+    },
+    "Print Sheet" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "冲印版"
+          }
+        }
+      }
+    },
+    "Private Cloud Compute" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "私密云计算"
+          }
+        }
+      }
+    },
+    "Private Cloud Compute couldn’t be reached." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法连接私密云计算。"
+          }
+        }
+      }
+    },
+    "Private Cloud Compute is unavailable." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "私密云计算不可用。"
+          }
+        }
+      }
+    },
+    "Private Cloud Compute’s daily limit is reached." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已达到私密云计算的每日使用上限。"
+          }
+        }
+      }
+    },
+    "Private Cloud Compute’s daily limit is reached. It resets %@." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已达到私密云计算的每日使用上限，将于%@重置。"
+          }
+        }
+      }
+    },
+    "Raise the phone a little" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请将手机稍微抬高"
+          }
+        }
+      }
+    },
+    "Recent" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近使用"
+          }
+        }
+      }
+    },
+    "red" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "红色"
+          }
+        }
+      }
+    },
+    "Remove as Default" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消默认"
+          }
+        }
+      }
+    },
+    "Remove glasses if you can" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尽量摘下眼镜"
+          }
+        }
+      }
+    },
+    "Remove hats and headbands. Religious or medical coverings are allowed with a statement." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请摘下帽子和发带。宗教或医疗原因的遮盖物在附上说明后可以佩戴。"
+          }
+        }
+      }
+    },
+    "Rename" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新命名"
+          }
+        }
+      }
+    },
+    "Rename Photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新命名照片"
+          }
+        }
+      }
+    },
+    "Replace" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "替换"
+          }
+        }
+      }
+    },
+    "Replace Background" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "替换背景"
+          }
+        }
+      }
+    },
+    "Replace Photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "替换照片"
+          }
+        }
+      }
+    },
+    "Requirements" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "规定"
+          }
+        }
+      }
+    },
+    "Requirements as of" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "规定截至"
+          }
+        }
+      }
+    },
+    "Requirements as of %@, checked against the official page. PassPhoto measures and crops these for you." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "规定截至 %@，已对照官方页面核查。PassPhoto 会为你测量并裁剪。"
+          }
+        }
+      }
+    },
+    "Requirements as of %@. Each document shows the date it was last confirmed on its official page." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "规定截至 %@。每种证件都会显示其在官方页面上最后确认的日期。"
+          }
+        }
+      }
+    },
+    "Residence" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "居留证件"
+          }
+        }
+      }
+    },
+    "Resolution" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分辨率"
+          }
+        }
+      }
+    },
+    "Rules" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "规定"
+          }
+        }
+      }
+    },
+    "Rules changed since this photo was made" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "制作此照片后规定已更新"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储"
+          }
+        }
+      }
+    },
+    "Save Photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储照片"
+          }
+        }
+      }
+    },
+    "Save to Photos" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储到“照片”"
+          }
+        }
+      }
+    },
+    "Saved as" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储为"
+          }
+        }
+      }
+    },
+    "Saved as “%@”, %lld × %lld pixels." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已存储为“%1$@”，%2$lld × %3$lld 像素。"
+          }
+        }
+      }
+    },
+    "Saved to Photos" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已存储到“照片”"
+          }
+        }
+      }
+    },
+    "Schengen Area" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "申根区"
+          }
+        }
+      }
+    },
+    "See all checks" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看全部检查项"
+          }
+        }
+      }
+    },
+    "Set as Default" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设为默认"
+          }
+        }
+      }
+    },
+    "Share" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共享"
+          }
+        }
+      }
+    },
+    "Sharp" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清晰"
+          }
+        }
+      }
+    },
+    "Shows every requirement and whether the photo meets it" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示每项要求及照片是否符合"
+          }
+        }
+      }
+    },
+    "Shows options for another tip" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示再次打赏的选项"
+          }
+        }
+      }
+    },
+    "Size" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尺寸"
+          }
+        }
+      }
+    },
+    "Some values come from the international standard because the issuer doesn’t publish them. Check the official rules before you submit." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由于签发机构未公布部分数值，这些数值采用国际标准。提交前请查看官方规定。"
+          }
+        }
+      }
+    },
+    "Someone else, a hand or an object shows in the photo." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片中出现了其他人、手或物体。"
+          }
+        }
+      }
+    },
+    "Space above head" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头顶上方空间"
+          }
+        }
+      }
+    },
+    "Specifications" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "规格"
+          }
+        }
+      }
+    },
+    "Stand in front of a plain %@ wall, with nothing behind you." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "站在%@的纯色墙前，身后不要有任何物体。"
+          }
+        }
+      }
+    },
+    "Starting the camera…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在启动相机…"
+          }
+        }
+      }
+    },
+    "Switch Camera" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切换相机"
+          }
+        }
+      }
+    },
+    "Take off your glasses if you can. If you keep them on: no tint and no glare." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尽量摘下眼镜。如果要戴：不能是有色镜片，也不能有反光。"
+          }
+        }
+      }
+    },
+    "Take off your glasses." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请摘下眼镜。"
+          }
+        }
+      }
+    },
+    "Take Photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拍照"
+          }
+        }
+      }
+    },
+    "Tap + to make a passport, visa or ID photo for any of %lld documents. Your photo never goes to a company server, and there’s no account." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "轻点 + 即可为 %lld 种证件中的任意一种制作护照、签证或证件照。你的照片不会上传到任何公司的服务器，也无需账户。"
+          }
+        }
+      }
+    },
+    "Thank you!" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "谢谢你！"
+          }
+        }
+      }
+    },
+    "Thanks for your support!" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "感谢你的支持！"
+          }
+        }
+      }
+    },
+    "That photo couldn’t be read." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取该照片。"
+          }
+        }
+      }
+    },
+    "The background can’t be replaced: the person couldn’t be separated from it." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法替换背景：无法将人物与背景分离。"
+          }
+        }
+      }
+    },
+    "The background is replaced only when it doesn’t meet the rules." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只有在背景不符合规定时才会替换。"
+          }
+        }
+      }
+    },
+    "The background was replaced." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "背景已替换。"
+          }
+        }
+      }
+    },
+    "The expression isn’t neutral. Don’t smile." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表情不够自然，请不要微笑。"
+          }
+        }
+      }
+    },
+    "The eyes are level." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "双眼水平。"
+          }
+        }
+      }
+    },
+    "The eyes show red-eye. Retake without flash." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "出现了红眼。请关闭闪光灯重拍。"
+          }
+        }
+      }
+    },
+    "The face is %@ left of centre." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脸部偏左 %@。"
+          }
+        }
+      }
+    },
+    "The face is %@ right of centre." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脸部偏右 %@。"
+          }
+        }
+      }
+    },
+    "The face is centred." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脸部居中。"
+          }
+        }
+      }
+    },
+    "The face is too dark or too bright." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脸部太暗或太亮。"
+          }
+        }
+      }
+    },
+    "The finished photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "制作好的照片"
+          }
+        }
+      }
+    },
+    "The head tilts %lld°. Retake with your head straight." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头部倾斜 %lld°。请保持头部端正后重拍。"
+          }
+        }
+      }
+    },
+    "The model available on this iPhone can’t look at photos." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此 iPhone 上可用的模型无法查看照片。"
+          }
+        }
+      }
+    },
+    "The mouth is open. Close it and relax your face." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "嘴巴张开了。请闭上嘴，放松面部。"
+          }
+        }
+      }
+    },
+    "The original background is kept." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留原背景。"
+          }
+        }
+      }
+    },
+    "The original of this photo is missing, so it can’t be adjusted." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此照片的原图已丢失，无法调整。"
+          }
+        }
+      }
+    },
+    "The photo couldn’t be prepared for review." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法准备照片以供检查。"
+          }
+        }
+      }
+    },
+    "The photo couldn’t be rendered." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法渲染照片。"
+          }
+        }
+      }
+    },
+    "The photo is blurry. Hold still or use a tripod." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片模糊。请保持稳定或使用三脚架。"
+          }
+        }
+      }
+    },
+    "The photo looks filtered or retouched. Use the original." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片看起来加了滤镜或经过修饰。请使用原图。"
+          }
+        }
+      }
+    },
+    "The requirements couldn’t be reached." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法获取规定数据。"
+          }
+        }
+      }
+    },
+    "The saved photo" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已存储的照片"
+          }
+        }
+      }
+    },
+    "The top of the head touches the edge. Zoom out a little." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头顶碰到了边缘。请稍微缩小。"
+          }
+        }
+      }
+    },
+    "There are shadows on the face. Face a window or add light from the front." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脸上有阴影。请面向窗户，或从正面补光。"
+          }
+        }
+      }
+    },
+    "There’s glare on the glasses. Tilt them down slightly or take them off." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "眼镜有反光。请将眼镜稍微向下倾斜或摘下。"
+          }
+        }
+      }
+    },
+    "These requirements were last confirmed on %@. Check the official page before you submit." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这些规定最后确认于 %@。提交前请查看官方页面。"
+          }
+        }
+      }
+    },
+    "This iPhone doesn’t support Private Cloud Compute." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此 iPhone 不支持私密云计算。"
+          }
+        }
+      }
+    },
+    "Tinted glasses aren’t allowed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不允许佩戴有色眼镜。"
+          }
+        }
+      }
+    },
+    "Tip" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打赏"
+          }
+        }
+      }
+    },
+    "Tip %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打赏 %@"
+          }
+        }
+      }
+    },
+    "Top of head" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "头顶"
+          }
+        }
+      }
+    },
+    "Try Again" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试"
+          }
+        }
+      }
+    },
+    "Turn to face the camera directly." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请正对镜头。"
+          }
+        }
+      }
+    },
+    "Unedited" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未经编辑"
+          }
+        }
+      }
+    },
+    "Updated to the latest requirements. " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已更新为最新规定。"
+          }
+        }
+      }
+    },
+    "Upload limit" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上传大小限制"
+          }
+        }
+      }
+    },
+    "USCIS (Green Card, Naturalization, EAD)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USCIS（绿卡、入籍、工作许可）"
+          }
+        }
+      }
+    },
+    "Visa" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "签证"
+          }
+        }
+      }
+    },
+    "Visas" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "签证"
+          }
+        }
+      }
+    },
+    "Wear everyday clothes in a colour that stands out from the background. No uniforms." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "穿与背景颜色有明显区别的日常服装。不要穿制服。"
+          }
+        }
+      }
+    },
+    "white" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "白色"
+          }
+        }
+      }
+    },
+    "white or off-white" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "白色或米白色"
+          }
+        }
+      }
+    },
+    "You have the latest requirements. " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的规定已是最新版本。"
+          }
+        }
+      }
+    },
+    "You’re Welcome" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不客气"
+          }
+        }
+      }
+    },
+    "You’ve given %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你已打赏 %@"
+          }
+        }
+      }
+    },
+    "You’ve given %@ so far." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你目前已打赏 %@。"
+          }
+        }
+      }
+    },
+    "Your background" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的背景"
+          }
+        }
+      }
+    },
+    "Your background didn’t meet the rules, so it was replaced. The person isn’t changed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的背景不符合规定，因此已被替换。人物本身未做改动。"
+          }
+        }
+      }
+    },
+    "Your background is %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的背景为%@"
+          }
+        }
+      }
+    },
+    "Your coffee means a lot. As a thank-you, every photo you save now comes with a little celebration." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的咖啡对我意义重大。作为感谢，你今后每次存储照片都会有一个小小的庆祝动画。"
+          }
+        }
+      }
+    },
+    "Your shadow shows on the background. Step away from the wall." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "背景上有你的影子。请离墙远一些。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

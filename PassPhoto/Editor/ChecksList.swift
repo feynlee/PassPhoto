@@ -73,15 +73,15 @@ struct ChecksList: View {
 
 private extension ChecksList {
     var babyLabel: String {
-        if let months = model.spec.infant?.maxAgeMonths { return "Baby under \(months) months" }
-        return "Baby"
+        if let months = model.spec.infant?.maxAgeMonths { return String(localized: "Baby under \(months) months") }
+        return String(localized: "Baby")
     }
 
     var adjustmentsFooter: String {
-        guard model.canReplaceBackground else { return "The background can’t be replaced: the person couldn’t be separated from it." }
-        if model.backgroundIsReplaced { return "Your background didn’t meet the rules, so it was replaced. The person isn’t changed." }
-        if model.replaceBackground { return "The background is replaced only when it doesn’t meet the rules." }
-        return "The original background is kept."
+        guard model.canReplaceBackground else { return String(localized: "The background can’t be replaced: the person couldn’t be separated from it.") }
+        if model.backgroundIsReplaced { return String(localized: "Your background didn’t meet the rules, so it was replaced. The person isn’t changed.") }
+        if model.replaceBackground { return String(localized: "The background is replaced only when it doesn’t meet the rules.") }
+        return String(localized: "The original background is kept.")
     }
 }
 
@@ -109,10 +109,10 @@ struct CheckRow: View {
 
     private var accessibilityStatus: String {
         switch check.status {
-        case .pass: "Passes"
-        case .attention: "Needs a look"
-        case .fail: "Doesn’t meet the requirement"
-        case .pending: "Check yourself"
+        case .pass: String(localized: "Passes")
+        case .attention: String(localized: "Needs a look")
+        case .fail: String(localized: "Doesn’t meet the requirement")
+        case .pending: String(localized: "Check yourself")
         }
     }
 }

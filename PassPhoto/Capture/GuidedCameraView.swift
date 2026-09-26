@@ -163,7 +163,7 @@ struct GuidedCameraView: View {
 /// Keeps the coaching steady: a new hint shows only once it has held for a couple of readings, and the
 /// ready state takes (and leaves) a little longer, so small wobbles don't make it flicker.
 struct HintStabilizer {
-    private(set) var shown = CaptureHint(message: "Starting the camera…", ready: false)
+    private(set) var shown = CaptureHint(message: String(localized: "Starting the camera…"), ready: false)
     private var pending: CaptureHint?
     private var count = 0
 
@@ -208,21 +208,21 @@ struct CaptureHint: Equatable {
         let target = Self.faceTarget(in: screen)
         func hint(_ message: String) -> (String, Bool) { (message, false) }
         let result: (String, Bool) = {
-            guard let face else { return hint("Look at the camera") }
-            if faceCount > 1 { return hint("Only one person in the photo") }
-            if brightness < 0.25 { return hint("Find more light") }
+            guard let face else { return hint(String(localized: "Look at the camera")) }
+            if faceCount > 1 { return hint(String(localized: "Only one person in the photo")) }
+            if brightness < 0.25 { return hint(String(localized: "Find more light")) }
             // Generous limits: PassPhoto crops afterwards, so the framing only has to be roughly right.
-            if abs(tilt) > 6 { return hint("Hold the phone straight") }
-            if abs(pitch) > 15 { return hint("Hold the phone upright, at eye level") }
+            if abs(tilt) > 6 { return hint(String(localized: "Hold the phone straight")) }
+            if abs(pitch) > 15 { return hint(String(localized: "Hold the phone upright, at eye level")) }
             // Wide on the large side: at arm's length a selfie's face is bigger than the outline, and
             // cropping takes care of the size.
-            if face.height < target.height * 0.65 { return hint("Move closer") }
-            if face.height > target.height * 1.9 { return hint("Move back a little") }
+            if face.height < target.height * 0.65 { return hint(String(localized: "Move closer")) }
+            if face.height > target.height * 1.9 { return hint(String(localized: "Move back a little")) }
             // Say which way, so it's clear what to do.
             let dx = face.midX - target.midX, dy = face.midY - target.midY
-            if abs(dy) > screen.height * 0.08 { return hint(dy > 0 ? "Raise the phone a little" : "Lower the phone a little") }
-            if abs(dx) > screen.width * 0.12 { return hint("Centre your face in the outline") }
-            return ("Looks good — take the photo", true)
+            if abs(dy) > screen.height * 0.08 { return hint(dy > 0 ? String(localized: "Raise the phone a little") : String(localized: "Lower the phone a little")) }
+            if abs(dx) > screen.width * 0.12 { return hint(String(localized: "Centre your face in the outline")) }
+            return (String(localized: "Looks good — take the photo"), true)
         }()
         message = result.0
         ready = result.1
@@ -268,7 +268,7 @@ private struct LevelIndicator: View {
         }
         .frame(width: 48, height: 48)
         .accessibilityElement()
-        .accessibilityLabel(isLevel ? "Phone is level" : "Phone is tilted")
+        .accessibilityLabel(isLevel ? String(localized: "Phone is level") : String(localized: "Phone is tilted"))
     }
 }
 

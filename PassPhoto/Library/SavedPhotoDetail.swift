@@ -52,7 +52,8 @@ struct SavedPhotoDetail: View {
                     LabeledContent("Rules", value: "Baby")
                 }
                 if photo.openIssues > 0 {
-                    Label("\(photo.openIssues) \(photo.openIssues == 1 ? "check needed" : "checks needed") a look when saved.", systemImage: CheckStatus.attention.symbol)
+                    Label(photo.openIssues == 1 ? "1 check needed a look when saved." : "\(photo.openIssues) checks needed a look when saved.",
+                          systemImage: CheckStatus.attention.symbol)
                         .foregroundStyle(Color.dsAttention)
                 }
             }

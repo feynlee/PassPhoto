@@ -131,7 +131,7 @@ struct RootView: View {
 
     private func open(_ photo: SavedPhoto) {
         guard let original = UIImage(contentsOfFile: photo.originalURL.path(percentEncoded: false))?.cgImage else {
-            loadError = "The original of this photo is missing, so it can’t be adjusted."
+            loadError = String(localized: "The original of this photo is missing, so it can’t be adjusted.")
             return
         }
         workspace = .photo(EditorModel(image: original, spec: photo.spec, editing: photo))

@@ -65,7 +65,10 @@ struct SaveSheet: View {
 
                 if model.openIssues > 0 {
                     Section {
-                        Label("\(model.openIssues) \(model.openIssues == 1 ? "check needs" : "checks need") a look. You can still save, but the photo may be rejected.", systemImage: "exclamationmark.triangle.fill")
+                        Label(model.openIssues == 1
+                              ? "1 check needs a look. You can still save, but the photo may be rejected."
+                              : "\(model.openIssues) checks need a look. You can still save, but the photo may be rejected.",
+                              systemImage: "exclamationmark.triangle.fill")
                             .foregroundStyle(Color.dsAttention)
                     }
                 }
@@ -103,10 +106,11 @@ struct SaveSheet: View {
 
     private var fileDescription: String {
         let spec = model.spec
-        var text = "Saved as “\(PhotoStore.exportFileName(name: name, date: model.editing?.createdAt ?? .now))”, \(Int(spec.outputPixels.width)) × \(Int(spec.outputPixels.height)) pixels"
-        if let kb = spec.maxFileKB { text += ", compressed to \(kb) KB or less for upload" }
-        if model.backgroundIsReplaced { text += ". The background was replaced" }
-        return text + "."
+        let file = PhotoStore.exportFileName(name: name, date: model.editing?.createdAt ?? .now)
+        var sentences = [String(localized: "Saved as “\(file)”, \(Int(spec.outputPixels.width)) × \(Int(spec.outputPixels.height)) pixels.")]
+        if let kb = spec.maxFileKB { sentences.append(String(localized: "Compressed to \(kb) KB or less for upload.")) }
+        if model.backgroundIsReplaced { sentences.append(String(localized: "The background was replaced.")) }
+        return sentences.joined(separator: " ")
     }
 
     private func save() async {
