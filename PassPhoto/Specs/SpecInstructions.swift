@@ -82,7 +82,7 @@ struct InstructionsSection: View {
                 }
             }
         } header: {
-            Text("How to Take It")
+            Text("How to Take It").foregroundStyle(Color.dsTint)
         }
     }
 }
@@ -115,7 +115,7 @@ struct SpecificationsSection: View {
                 Label("Official photo rules", systemImage: "arrow.up.right.square")
             }
         } header: {
-            Text("Specifications")
+            Text("Specifications").foregroundStyle(Color.dsTint)
         } footer: {
             VStack(alignment: .leading, spacing: 6) {
                 Text("Requirements as of \(spec.verifiedLabel), checked against the official page. PassPhoto measures and crops these for you.")

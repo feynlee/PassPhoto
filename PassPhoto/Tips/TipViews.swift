@@ -55,6 +55,7 @@ struct SavedConfirmationCard: View {
                 .padding(.top, 24)
             Text("Photo Saved")
                 .font(.title2.weight(.bold))
+                .foregroundStyle(Color.dsTint)
                 .padding(.top, 10)
             Text(detail)
                 .font(.subheadline)
@@ -129,6 +130,7 @@ struct TipSupportBanner: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(tips.hasTipped ? "Thanks for your support!" : "Buy Me a Coffee")
                         .font(.headline)
+                        .foregroundStyle(Color.dsTint)
                     Text(tips.hasTipped ? "You’ve given \(tips.formattedTotal) so far." : "Enjoying PassPhoto? A tip is appreciated.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
@@ -322,6 +324,7 @@ struct TipThanksCard: View {
 
             Text("Thank you!")
                 .font(.title2.weight(.bold))
+                .foregroundStyle(Color.dsTint)
                 .padding(.top, 14)
             Text("Your coffee means a lot. As a thank-you, every photo you save now comes with a little celebration.")
                 .font(.subheadline)

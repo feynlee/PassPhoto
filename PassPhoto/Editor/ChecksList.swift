@@ -29,7 +29,7 @@ struct ChecksList: View {
                 ForEach(model.measuredChecks) { CheckRow(check: $0) }
                 if let background = model.backgroundCheck { CheckRow(check: background) }
             } header: {
-                Text("Measurements")
+                Text("Measurements").foregroundStyle(Color.dsTint)
             } footer: {
                 Text("Measured on this iPhone. Only cropping and scaling are applied; the photo itself isn’t changed.")
             }
@@ -47,7 +47,7 @@ struct ChecksList: View {
                     ForEach(model.modelChecks) { CheckRow(check: $0) }
                 }
             } header: {
-                Text("Photo Quality")
+                Text("Photo Quality").foregroundStyle(Color.dsTint)
             } footer: {
                 switch model.review {
                 case .done(_, let engine):

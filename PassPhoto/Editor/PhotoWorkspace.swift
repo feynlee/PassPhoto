@@ -75,7 +75,9 @@ struct PhotoWorkspace: View {
                         }
                         .buttonStyle(.borderedProminent)
                         .tint(.dsTintFill)
-                            .disabled(model.phase != .ready)
+                            // Only a photo that meets every checked requirement can be saved.
+                            .disabled(model.phase != .ready || model.openIssues > 0)
+                            .accessibilityHint(model.openIssues > 0 ? "Fix the checks marked below to save" : "")
                     }
                 }
             }
@@ -273,7 +275,7 @@ private struct DocumentCard: View {
                     VStack(alignment: .leading, spacing: 1) {
                         Text(spec.title)
                             .font(.headline)
-                            .foregroundStyle(.primary)
+                            .foregroundStyle(Color.dsTint)
                         Text("\(spec.sizeLabel) · rules as of \(spec.verifiedLabel)")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
@@ -350,7 +352,7 @@ private struct StatusBar: View {
                     Text(summary.text)
                         .font(.headline)
                         .foregroundStyle(.primary)
-                    Text("See all checks")
+                    Text(model.openIssues > 0 ? "Fix these to save · See all checks" : "See all checks")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }

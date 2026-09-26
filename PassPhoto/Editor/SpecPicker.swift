@@ -56,13 +56,17 @@ struct SpecList: View {
     var body: some View {
         List {
             if query.isEmpty, let defaultSpec {
-                Section("Default") {
+                Section {
                     row(defaultSpec, showCountry: true)
+                } header: {
+                    Text("Default").foregroundStyle(Color.dsTint)
                 }
             }
             if query.isEmpty, !recents.filter({ $0 != defaultSpec }).isEmpty {
-                Section("Recent") {
+                Section {
                     ForEach(recents.filter { $0 != defaultSpec }) { row($0, showCountry: true) }
+                } header: {
+                    Text("Recent").foregroundStyle(Color.dsTint)
                 }
             }
             if query.isEmpty, let asOf = RequirementsUpdater.shared.asOf {
@@ -75,7 +79,7 @@ struct SpecList: View {
                 Section {
                     ForEach(group.specs) { row($0, showCountry: false) }
                 } header: {
-                    Text("\(group.specs[0].flag)  \(group.country)")
+                    Text("\(group.specs[0].flag)  \(group.country)").foregroundStyle(Color.dsTint)
                 }
             }
         }

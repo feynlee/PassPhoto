@@ -6,6 +6,14 @@ struct PassPhotoApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @State private var jar = TipJar()
 
+    init() {
+        // Screen titles in the accent navy, like the headings inside each screen.
+        let navy = UIColor(Color.dsTint)
+        let appearance = UINavigationBar.appearance()
+        appearance.largeTitleTextAttributes = [.foregroundColor: navy]
+        appearance.titleTextAttributes = [.foregroundColor: navy]
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()
