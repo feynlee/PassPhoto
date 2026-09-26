@@ -2,8 +2,8 @@ import AVFoundation
 import SwiftUI
 
 /// A camera that coaches while framing: an outline to put the head in, and one hint at a time about
-/// distance, centring, light, head angle and how the phone is held. The shutter works at any time; the
-/// outline turns cyan when everything looks right.
+/// distance, centring, light and how the phone is held. The shutter works at any time; the outline turns
+/// solid blue when everything looks right. Head angle is checked after the photo is taken.
 struct GuidedCameraView: View {
     let onCapture: (UIImage) -> Void
 
@@ -16,6 +16,7 @@ struct GuidedCameraView: View {
     @State private var denied = false
     @State private var capturing = false
     @State private var screen = CGSize(width: 390, height: 844)
+    @State private var preview = PreviewLayerReference()
 
     var body: some View {
         ZStack {
@@ -32,7 +33,7 @@ struct GuidedCameraView: View {
                 }
                 .foregroundStyle(.white)
             } else {
-                CameraPreview(session: camera.session)
+                CameraPreview(session: camera.session, reference: preview)
                     .ignoresSafeArea()
                     // The preview and outline fill the whole screen, so measure it, not the safe area.
                     .onGeometryChange(for: CGSize.self) { $0.size } action: { screen = $0 }
@@ -111,7 +112,10 @@ struct GuidedCameraView: View {
             }
             camera.onReading = { newReading in
                 reading = newReading
-                _ = stabilizer.update(CaptureHint(reading: newReading, tilt: level.tilt, pitch: level.pitch, screen: screen))
+                // The preview layer places the face exactly where it's drawn on screen.
+                let face = newReading.face.flatMap { preview.layer?.layerRectConverted(fromMetadataOutputRect: $0) }
+                _ = stabilizer.update(CaptureHint(face: face, faceCount: newReading.faceCount, brightness: newReading.brightness,
+                                                  tilt: level.tilt, pitch: level.pitch, screen: screen))
             }
             camera.start(position: position)
             level.start()
@@ -159,10 +163,6 @@ struct CaptureHint: Equatable {
     let message: String
     let ready: Bool
 
-    /// Frames are 3:4 portrait; the preview fills the screen, so a taller screen shows only the middle of
-    /// each frame's width.
-    static let frameAspect = 3.0 / 4.0
-
     /// The head outline, in screen points: head-shaped (a little under three quarters as wide as tall), a
     /// bit over a third of the screen's height, centred, with room above for the hair. At that size the
     /// head is large enough to crop to any document at full resolution.
@@ -172,7 +172,7 @@ struct CaptureHint: Equatable {
         return CGRect(x: (size.width - width) / 2, y: size.height * 0.16, width: width, height: height)
     }
 
-    /// Where Vision's face box (brows to chin) sits when the head fills the outline.
+    /// Where the camera's face box (brows to chin) sits when the head fills the outline.
     static func faceTarget(in size: CGSize) -> CGRect {
         let oval = oval(in: size)
         let height = oval.height * 0.6
@@ -185,32 +185,23 @@ struct CaptureHint: Equatable {
         self.ready = ready
     }
 
-    init(reading: FrameReading?, tilt: Double, pitch: Double, screen: CGSize) {
-        let visibleWidth = min(1, (screen.width / max(1, screen.height)) / Self.frameAspect)
+    /// - Parameter face: the face in screen points, from the preview layer.
+    init(face: CGRect?, faceCount: Int, brightness: Double, tilt: Double, pitch: Double, screen: CGSize) {
         let target = Self.faceTarget(in: screen)
         func hint(_ message: String) -> (String, Bool) { (message, false) }
         let result: (String, Bool) = {
-            guard let reading else { return hint("Starting the camera…") }
-            guard let frameFace = reading.face else { return hint("Look at the camera") }
-            // The face in screen points, to compare with the outline.
-            let face = CGRect(
-                x: ((frameFace.minX - 0.5) / visibleWidth + 0.5) * screen.width,
-                y: frameFace.minY * screen.height,
-                width: frameFace.width / visibleWidth * screen.width,
-                height: frameFace.height * screen.height
-            )
-            if reading.faceCount > 1 { return hint("Only one person in the photo") }
-            if reading.brightness < 0.25 { return hint("Find more light") }
+            guard let face else { return hint("Look at the camera") }
+            if faceCount > 1 { return hint("Only one person in the photo") }
+            if brightness < 0.25 { return hint("Find more light") }
             // Generous limits: PassPhoto crops afterwards, so the framing only has to be roughly right.
             if abs(tilt) > 6 { return hint("Hold the phone straight") }
             if abs(pitch) > 15 { return hint("Hold the phone upright, at eye level") }
             if face.height < target.height * 0.7 { return hint("Move closer") }
             if face.height > target.height * 1.4 { return hint("Move back a little") }
-            if abs(face.midX - target.midX) > screen.width * 0.12 || abs(face.midY - target.midY) > screen.height * 0.08 {
-                return hint("Put the face in the outline")
-            }
-            if abs(reading.rollDegrees) > 7 { return hint("Keep the head level") }
-            if abs(reading.yawDegrees) > 15 { return hint("Face the camera straight on") }
+            // Say which way, so it's clear what to do.
+            let dx = face.midX - target.midX, dy = face.midY - target.midY
+            if abs(dy) > screen.height * 0.08 { return hint(dy > 0 ? "Raise the phone a little" : "Lower the phone a little") }
+            if abs(dx) > screen.width * 0.12 { return hint("Centre your face in the outline") }
             return ("Looks good — take the photo", true)
         }()
         message = result.0
@@ -261,13 +252,20 @@ private struct LevelIndicator: View {
     }
 }
 
+/// Lets the coaching convert camera coordinates with the preview layer that draws them.
+final class PreviewLayerReference {
+    weak var layer: AVCaptureVideoPreviewLayer?
+}
+
 private struct CameraPreview: UIViewRepresentable {
     let session: AVCaptureSession
+    let reference: PreviewLayerReference
 
     func makeUIView(context: Context) -> PreviewView {
         let view = PreviewView()
         view.previewLayer.session = session
         view.previewLayer.videoGravity = .resizeAspectFill
+        reference.layer = view.previewLayer
         return view
     }
 

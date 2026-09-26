@@ -1,49 +1,46 @@
 import CoreGraphics
-import ImageIO
 import Testing
 @testable import PassPhoto
 
 struct CameraTests {
-    @Test func framesAreReadUprightForEachWayThePhoneIsHeld() {
-        // Held upright, the back camera needs a 90° rotation: its frames read as .right.
-        #expect(CameraController.orientation(forRotationAngle: 90, front: false) == .right)
-        #expect(CameraController.orientation(forRotationAngle: 90, front: true) == .leftMirrored)
-        #expect(CameraController.orientation(forRotationAngle: 0, front: false) == .up)
-        #expect(CameraController.orientation(forRotationAngle: 180, front: false) == .down)
-        #expect(CameraController.orientation(forRotationAngle: 270, front: true) == .rightMirrored)
+    let screen = CGSize(width: 402, height: 874)
+
+    /// The face box the preview layer would report for a face on the outline's target, in screen points.
+    private func face(scale: Double = 1, dx: Double = 0, dy: Double = 0) -> CGRect {
+        let target = CaptureHint.faceTarget(in: screen)
+        let size = CGSize(width: target.width * scale, height: target.height * scale)
+        return CGRect(x: target.midX + dx - size.width / 2, y: target.midY + dy - size.height / 2, width: size.width, height: size.height)
     }
 
-    /// A reading whose face sits exactly on the outline's face target, on a 402 × 874 screen.
-    private func centredReading(scale: Double = 1, offsetX: Double = 0) -> FrameReading {
-        let screen = CGSize(width: 402, height: 874)
-        let target = CaptureHint.faceTarget(in: screen)
-        let visibleWidth = min(1, (screen.width / screen.height) / CaptureHint.frameAspect)
-        // Back from screen points to the frame's normalized coordinates.
-        let width = target.width * scale / screen.width * visibleWidth
-        let height = target.height * scale / screen.height
-        let midX = ((target.midX + offsetX) / screen.width - 0.5) * visibleWidth + 0.5
-        let face = CGRect(x: midX - width / 2, y: target.midY / screen.height - height / 2, width: width, height: height)
-        return FrameReading(face: face, faceCount: 1, rollDegrees: 1, yawDegrees: 3, brightness: 0.5)
+    private func hint(_ face: CGRect?, tilt: Double = 0, pitch: Double = 0) -> CaptureHint {
+        CaptureHint(face: face, faceCount: face == nil ? 0 : 1, brightness: 0.5, tilt: tilt, pitch: pitch, screen: screen)
     }
 
     @Test func aFaceInTheOutlineIsReady() {
-        let screen = CGSize(width: 402, height: 874)
-        #expect(CaptureHint(reading: centredReading(), tilt: 1, pitch: 3, screen: screen).ready)
+        #expect(hint(face()).ready)
         // Some slack in size and position still counts.
-        #expect(CaptureHint(reading: centredReading(scale: 1.2, offsetX: 30), tilt: 3, pitch: 8, screen: screen).ready)
-        #expect(CaptureHint(reading: centredReading(scale: 0.5), tilt: 0, pitch: 0, screen: screen).message == "Move closer")
-        #expect(CaptureHint(reading: centredReading(scale: 1.8), tilt: 0, pitch: 0, screen: screen).message == "Move back a little")
+        #expect(hint(face(scale: 1.2, dx: 30, dy: 40), tilt: 3, pitch: 8).ready)
+        #expect(hint(face(scale: 0.8), tilt: 2).ready)
+    }
+
+    @Test func hintsSayWhatToDo() {
+        #expect(hint(nil).message == "Look at the camera")
+        #expect(hint(face(scale: 0.5)).message == "Move closer")
+        #expect(hint(face(scale: 1.8)).message == "Move back a little")
+        // Face low on screen: the camera is too high, so lower it; and the reverse.
+        #expect(hint(face(dy: 150)).message == "Raise the phone a little")
+        #expect(hint(face(dy: -150)).message == "Lower the phone a little")
+        #expect(hint(face(dx: 120)).message == "Centre your face in the outline")
     }
 
     @Test func hintsDoNotFlicker() {
         var stabilizer = HintStabilizer()
         let ready = CaptureHint(message: "Looks good — take the photo", ready: true)
         let closer = CaptureHint(message: "Move closer", ready: false)
-        // Ready takes three steady readings to show…
         #expect(!stabilizer.update(ready).ready)
         #expect(!stabilizer.update(ready).ready)
         #expect(stabilizer.update(ready).ready)
-        // …and one stray reading doesn't take it away.
+        // One stray reading doesn't take it away.
         #expect(stabilizer.update(closer).ready)
         #expect(stabilizer.update(ready).ready)
     }

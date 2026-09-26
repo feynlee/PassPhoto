@@ -1,26 +1,30 @@
 import AVFoundation
 import CoreMotion
 import UIKit
-import Vision
 import os
 
 /// What the camera sees right now, for the live coaching.
 nonisolated struct FrameReading: Sendable, Equatable {
-    /// The face in the upright frame, normalized with a top-left origin; nil when no face is visible.
+    /// The largest face, in the capture output's metadata coordinates. Convert it to the screen with the
+    /// preview layer's `layerRectConverted(fromMetadataOutputRect:)`, which accounts for the sensor's
+    /// rotation, the front camera's mirroring and the preview's fill crop.
     var face: CGRect?
     var faceCount: Int
-    var rollDegrees: Double
-    var yawDegrees: Double
     /// Average brightness, 0–1.
     var brightness: Double
 }
 
 /// Runs the capture session off the main thread: preview, a face check on every few frames, and photos.
-nonisolated final class CameraController: NSObject, @unchecked Sendable, AVCaptureVideoDataOutputSampleBufferDelegate, AVCapturePhotoCaptureDelegate {
+nonisolated final class CameraController: NSObject, @unchecked Sendable, AVCaptureVideoDataOutputSampleBufferDelegate,
+    AVCaptureMetadataOutputObjectsDelegate, AVCapturePhotoCaptureDelegate {
     let session = AVCaptureSession()
     private let queue = DispatchQueue(label: "liziyue.PassPhoto.camera")
     private let photoOutput = AVCapturePhotoOutput()
     private let videoOutput = AVCaptureVideoDataOutput()
+    /// The camera's own face detector, whose results the preview layer can place exactly on screen.
+    private let metadataOutput = AVCaptureMetadataOutput()
+    private var faces: [CGRect] = []
+    private var facesUpdated = Date.distantPast
     private let logger = Logger(subsystem: "liziyue.PassPhoto", category: "Camera")
     private var input: AVCaptureDeviceInput?
     private var position: AVCaptureDevice.Position = .back
@@ -99,43 +103,35 @@ nonisolated final class CameraController: NSObject, @unchecked Sendable, AVCaptu
             videoOutput.setSampleBufferDelegate(self, queue: queue)
             session.addOutput(videoOutput)
         }
-        // Frames stay as the sensor delivers them (landscape); Vision is told their orientation instead.
+        if !session.outputs.contains(metadataOutput), session.canAddOutput(metadataOutput) {
+            session.addOutput(metadataOutput)
+            metadataOutput.setMetadataObjectsDelegate(self, queue: queue)
+        }
+        if metadataOutput.availableMetadataObjectTypes.contains(.face) {
+            metadataOutput.metadataObjectTypes = [.face]
+        }
     }
 
     // MARK: Frames
 
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        faces = metadataObjects.compactMap { ($0 as? AVMetadataFaceObject)?.bounds }
+        facesUpdated = .now
+    }
+
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         frameIndex += 1
-        // About five checks a second is plenty for coaching.
+        // About five readings a second is plenty for coaching.
         guard frameIndex % 6 == 0, let buffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-
-        let request = VNDetectFaceRectanglesRequest()
-        let angle = rotation?.videoRotationAngleForHorizonLevelCapture ?? 90
-        let orientation = Self.orientation(forRotationAngle: angle, front: position == .front)
-        // With the orientation given, Vision's face box is in upright (and, for the front camera, mirrored
-        // like the preview) coordinates, matching what's on screen.
-        try? VNImageRequestHandler(cvPixelBuffer: buffer, orientation: orientation).perform([request])
-        let faces = request.results ?? []
-        let face = faces.max { $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height }
+        // Faces not reported for half a second have left the frame.
+        let current = Date.now.timeIntervalSince(facesUpdated) < 0.5 ? faces : []
         let reading = FrameReading(
-            face: face.map { CGRect(x: $0.boundingBox.minX, y: 1 - $0.boundingBox.maxY, width: $0.boundingBox.width, height: $0.boundingBox.height) },
-            faceCount: faces.count,
-            rollDegrees: (face?.roll?.doubleValue ?? 0) * 180 / .pi,
-            yawDegrees: (face?.yaw?.doubleValue ?? 0) * 180 / .pi,
+            face: current.max { $0.width * $0.height < $1.width * $1.height },
+            faceCount: current.count,
             brightness: Self.brightness(of: buffer)
         )
         if let onReading {
             Task { @MainActor in onReading(reading) }
-        }
-    }
-
-    /// How to read a sensor frame upright, given the rotation the device needs for a level picture.
-    static func orientation(forRotationAngle angle: CGFloat, front: Bool) -> CGImagePropertyOrientation {
-        switch (Int(angle.rounded()) % 360 + 360) % 360 {
-        case 90: front ? .leftMirrored : .right
-        case 180: front ? .downMirrored : .down
-        case 270: front ? .rightMirrored : .left
-        default: front ? .upMirrored : .up
         }
     }
 
