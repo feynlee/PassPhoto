@@ -59,33 +59,10 @@ struct ChecksList: View {
                 }
             }
 
-            Section("\(model.spec.title) Requirements") {
-                LabeledContent("Size", value: model.spec.sizeLabel)
-                LabeledContent("Head", value: model.spec.headHeightMM.formattedMM())
-                if let eye = model.spec.eyeLineFromBottomMM {
-                    LabeledContent("Eyes from bottom", value: eye.formattedMM())
-                }
-                if let margin = model.spec.topMarginMM {
-                    LabeledContent("Space above head", value: margin.formattedMM())
-                }
-                LabeledContent("Background", value: model.spec.background.requirement)
-                LabeledContent("Glasses", value: model.spec.glasses.requirement)
-                ForEach(model.spec.notes + (model.isInfant ? model.spec.infant?.notes ?? [] : []), id: \.self) { note in
-                    Text(note).font(.subheadline)
-                }
-                LabeledContent("Checked", value: model.spec.verified)
-                if model.spec.confidence == .partial {
-                    Text("Some values come from the international standard because the issuer doesn’t publish them. Check the official rules before you submit.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
-                Link(destination: model.spec.source) {
-                    Label("Official photo rules", systemImage: "arrow.up.right.square")
-                }
-            }
+            InstructionsSection(spec: model.spec, infant: model.isInfant)
+            SpecificationsSection(spec: model.spec, infant: model.isInfant)
         }
         .listStyle(.insetGrouped)
-        .scrollContentBackground(.hidden)
     }
 }
 

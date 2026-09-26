@@ -7,6 +7,8 @@ extension Color {
     /// The one accent, the navy of a US passport cover: links, icons, the Save button and passed checks.
     /// Dark mode lightens the same hue so it reads on black.
     static let dsTint = Color(light: 0x1F2D5A, dark: 0x9DB0E4)
+    /// Filled buttons: the icon's navy exactly, in both themes, with white text.
+    static let dsTintFill = Color(rgb: 0x1F2D5A)
     /// Text and symbols on a `dsTint` fill.
     static let dsOnTint = Color(light: 0xFFFFFF, dark: 0x0E1633)
     /// Selected rows and status capsules for passed checks.
@@ -20,7 +22,7 @@ extension Color {
 
     /// Guides drawn over the photo. They don't change with the theme: they sit on the photo and its dimmed
     /// surround, always with a dark halo.
-    static let dsGuidePass = Color(rgb: 0x62DCE8)
+    static let dsGuidePass = Color(rgb: 0xA9BCF0)
     static let dsGuideAttention = Color(rgb: 0xFFB340)
     static let dsGuideNeutral = Color.white
     /// The photo outside the crop frame.

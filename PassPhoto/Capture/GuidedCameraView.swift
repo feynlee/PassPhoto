@@ -33,6 +33,8 @@ struct GuidedCameraView: View {
             } else {
                 CameraPreview(session: camera.session)
                     .ignoresSafeArea()
+                    // The preview and outline fill the whole screen, so measure it, not the safe area.
+                    .onGeometryChange(for: CGSize.self) { $0.size } action: { screen = $0 }
                 HeadOutline(ready: hint.ready)
                     .allowsHitTesting(false)
                     .ignoresSafeArea()
@@ -105,11 +107,10 @@ struct GuidedCameraView: View {
             level.stop()
         }
         .statusBarHidden()
-        .onGeometryChange(for: CGSize.self) { $0.size } action: { screen = $0 }
     }
 
     private var hint: CaptureHint {
-        CaptureHint(reading: reading, tilt: level.tilt, pitch: level.pitch, screenAspect: screen.width / max(1, screen.height))
+        CaptureHint(reading: reading, tilt: level.tilt, pitch: level.pitch, screen: screen)
     }
 
     private func shoot() {
@@ -131,33 +132,50 @@ struct CaptureHint {
     let message: String
     let ready: Bool
 
-    /// Where Vision's face box (brows to chin) should sit on screen, top-left origin. About a fifth of the
-    /// screen's height leaves room to crop to any spec at full resolution.
-    static let target = CGRect(x: 0.31, y: 0.27, width: 0.38, height: 0.22)
-
     /// Frames are 3:4 portrait; the preview fills the screen, so a taller screen shows only the middle of
     /// each frame's width.
     static let frameAspect = 3.0 / 4.0
 
-    init(reading: FrameReading?, tilt: Double, pitch: Double, screenAspect: Double) {
-        let visibleWidth = min(1, screenAspect / Self.frameAspect)
+    /// The head outline, in screen points: head-shaped (a little under three quarters as wide as tall), a
+    /// bit over a third of the screen's height, centred, with room above for the hair. At that size the
+    /// head is large enough to crop to any document at full resolution.
+    static func oval(in size: CGSize) -> CGRect {
+        let height = size.height * 0.36
+        let width = height * 0.74
+        return CGRect(x: (size.width - width) / 2, y: size.height * 0.16, width: width, height: height)
+    }
+
+    /// Where Vision's face box (brows to chin) sits when the head fills the outline.
+    static func faceTarget(in size: CGSize) -> CGRect {
+        let oval = oval(in: size)
+        let height = oval.height * 0.6
+        let width = oval.width * 0.82
+        return CGRect(x: oval.midX - width / 2, y: oval.minY + oval.height * 0.66 - height / 2, width: width, height: height)
+    }
+
+    init(reading: FrameReading?, tilt: Double, pitch: Double, screen: CGSize) {
+        let visibleWidth = min(1, (screen.width / max(1, screen.height)) / Self.frameAspect)
+        let target = Self.faceTarget(in: screen)
         func hint(_ message: String) -> (String, Bool) { (message, false) }
         let result: (String, Bool) = {
             guard let reading else { return hint("Starting the camera…") }
             guard let frameFace = reading.face else { return hint("Look at the camera") }
-            // The face in screen coordinates, to compare with the outline.
+            // The face in screen points, to compare with the outline.
             let face = CGRect(
-                x: (frameFace.minX - 0.5) / visibleWidth + 0.5, y: frameFace.minY,
-                width: frameFace.width / visibleWidth, height: frameFace.height
+                x: ((frameFace.minX - 0.5) / visibleWidth + 0.5) * screen.width,
+                y: frameFace.minY * screen.height,
+                width: frameFace.width / visibleWidth * screen.width,
+                height: frameFace.height * screen.height
             )
             if reading.faceCount > 1 { return hint("Only one person in the photo") }
             if reading.brightness < 0.25 { return hint("Find more light") }
             if abs(tilt) > 4 { return hint("Hold the phone straight") }
             if abs(pitch) > 12 { return hint("Hold the phone upright, at eye level") }
-            if face.height < Self.target.height * 0.7 { return hint("Move closer") }
-            if face.height > Self.target.height * 1.35 { return hint("Move back a little") }
-            let dx = face.midX - Self.target.midX, dy = face.midY - Self.target.midY
-            if abs(dx) > 0.08 || abs(dy) > 0.08 { return hint("Put the face in the outline") }
+            if face.height < target.height * 0.8 { return hint("Move closer") }
+            if face.height > target.height * 1.25 { return hint("Move back a little") }
+            if abs(face.midX - target.midX) > screen.width * 0.08 || abs(face.midY - target.midY) > screen.height * 0.05 {
+                return hint("Put the face in the outline")
+            }
             if abs(reading.rollDegrees) > 5 { return hint("Keep the head level") }
             if abs(reading.yawDegrees) > 12 { return hint("Face the camera straight on") }
             return ("Looks good. Take the photo.", true)
@@ -167,18 +185,14 @@ struct CaptureHint {
     }
 }
 
-/// A head-and-shoulders outline where the face should go.
+/// A head-shaped outline where the head should go.
 private struct HeadOutline: View {
     let ready: Bool
 
     var body: some View {
         GeometryReader { proxy in
             let size = proxy.size
-            let face = CaptureHint.target
-            let oval = CGRect(
-                x: face.minX * size.width, y: (face.minY - face.height * 0.45) * size.height,
-                width: face.width * size.width, height: face.height * 1.5 * size.height
-            )
+            let oval = CaptureHint.oval(in: size)
             let color = ready ? Color.dsGuidePass : .white
             ZStack {
                 Path { path in
@@ -186,10 +200,8 @@ private struct HeadOutline: View {
                     path.addEllipse(in: oval)
                 }
                 .fill(Color.black.opacity(0.35), style: FillStyle(eoFill: true))
-                Ellipse()
+                Path { $0.addEllipse(in: oval) }
                     .stroke(color, style: StrokeStyle(lineWidth: 3, dash: ready ? [] : [10, 8]))
-                    .frame(width: oval.width, height: oval.height)
-                    .position(x: oval.midX, y: oval.midY)
                     .shadow(color: .black.opacity(0.5), radius: 2)
             }
         }

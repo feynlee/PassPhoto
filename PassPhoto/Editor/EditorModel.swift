@@ -61,14 +61,14 @@ final class EditorModel {
     #endif
     private static let replaceBackgroundKey = "replaceBackground"
 
-    init(image: CGImage, spec: PhotoSpec, editing: SavedPhoto? = nil) {
+    init(image: CGImage, spec: PhotoSpec, infant: Bool = false, editing: SavedPhoto? = nil) {
         self.image = image
         self.displayImage = UIImage(cgImage: image)
         self.imageSize = CGSize(width: image.width, height: image.height)
         self.spec = spec
         self.editing = editing
         self.initialCrop = editing?.crop
-        self.isInfant = editing?.isInfant ?? false
+        self.isInfant = editing?.isInfant ?? (infant && spec.infant != nil)
         self.replaceBackground = editing?.backgroundReplaced ?? UserDefaults.standard.object(forKey: Self.replaceBackgroundKey) as? Bool ?? true
     }
 
