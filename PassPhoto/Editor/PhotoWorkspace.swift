@@ -85,6 +85,7 @@ struct PhotoWorkspace: View {
                 SpecPicker(selection: spec) { newSpec in
                     withAnimation(.snappy) { select(newSpec) }
                 }
+                .foregroundStyle(Color.dsInk)
             }
             .sheet(isPresented: $showingChecks) {
                 if let model {
@@ -98,6 +99,7 @@ struct PhotoWorkspace: View {
                                 }
                             }
                     }
+                    .foregroundStyle(Color.dsInk)
                     .presentationDetents([.medium, .large])
                     .presentationBackground(Color(uiColor: .systemGroupedBackground))
                 }
@@ -108,6 +110,7 @@ struct PhotoWorkspace: View {
                         jar.photoSaved(summary)
                         dismiss()
                     }
+                    .foregroundStyle(Color.dsInk)
                 }
             }
             .fullScreenCover(isPresented: $takingPhoto, onDismiss: {

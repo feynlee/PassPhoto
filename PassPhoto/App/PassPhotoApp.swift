@@ -18,6 +18,8 @@ struct PassPhotoApp: App {
         WindowGroup {
             RootView()
                 .tint(.dsTint)
+                // Navy ink for all text; views pick the accent or secondary level where they need it.
+                .foregroundStyle(Color.dsInk)
                 .environment(RequirementsUpdater.shared)
                 .environment(jar)
                 .task { await jar.store.loadProducts() }

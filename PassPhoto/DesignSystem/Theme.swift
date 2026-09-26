@@ -7,6 +7,10 @@ extension Color {
     /// The one accent, the navy of a US passport cover: links, icons, outlines and passed checks. Navy is
     /// unreadable on black, so dark mode uses a brighter blue of the same hue (225°) that still reads.
     static let dsTint = Color(light: 0x1F2D5A, dark: 0x7A92DA)
+    /// Body text: near-black navy in light mode and a soft blue-white in dark mode, so all text sits in
+    /// the navy family while the brighter `dsTint` still marks what's tappable and headings. Secondary
+    /// text is this at the system's secondary level.
+    static let dsInk = Color(light: 0x141C38, dark: 0xE3E8F6)
     /// Filled buttons: the icon's navy exactly, in both themes, with white text.
     static let dsTintFill = Color(rgb: 0x1F2D5A)
     /// Text and symbols on a `dsTint` fill.

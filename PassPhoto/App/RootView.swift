@@ -99,11 +99,11 @@ struct RootView: View {
         }
         .fullScreenCover(item: $workspace) { start in
             switch start {
-            case .new(let spec): PhotoWorkspace(spec: spec)
-            case .photo(let model): PhotoWorkspace(model: model)
+            case .new(let spec): PhotoWorkspace(spec: spec).foregroundStyle(Color.dsInk)
+            case .photo(let model): PhotoWorkspace(model: model).foregroundStyle(Color.dsInk)
             }
         }
-        .sheet(isPresented: $showingAbout) { AboutView() }
+        .sheet(isPresented: $showingAbout) { AboutView().foregroundStyle(Color.dsInk) }
         .animation(.snappy, value: jar.saved)
         .animation(.snappy, value: jar.showsThanks)
         #if DEBUG
