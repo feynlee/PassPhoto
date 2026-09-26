@@ -154,16 +154,29 @@ struct PhotoWorkspace: View {
             }
 
             InstructionsSection(spec: spec, infant: infant.wrappedValue)
-
-            Section {
-                SourceButtons(takePhoto: { takingPhoto = true }, chooseFromLibrary: { choosingPhoto = true })
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
-            }
-
             SpecificationsSection(spec: spec, infant: infant.wrappedValue)
         }
         .listStyle(.insetGrouped)
+        // The two ways to add the photo stay at the bottom, floating over the instructions as they scroll.
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            SourceButtons(takePhoto: { takingPhoto = true }, chooseFromLibrary: { choosingPhoto = true })
+                .padding(.horizontal)
+                .padding(.top, 12)
+                .padding(.bottom, 8)
+                .background {
+                    // A solid backing, so text never shows through the buttons, with a short fade above it
+                    // where the list scrolls away.
+                    let ground = Color(uiColor: .systemGroupedBackground)
+                    VStack(spacing: 0) {
+                        LinearGradient(colors: [ground.opacity(0), ground], startPoint: .top, endPoint: .bottom)
+                            .frame(height: 28)
+                        ground
+                    }
+                    .padding(.top, -28)
+                    .ignoresSafeArea(edges: .bottom)
+                    .allowsHitTesting(false)
+                }
+        }
     }
 
     private var babyLabel: String {
