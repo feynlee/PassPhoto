@@ -23,6 +23,9 @@ nonisolated final class CameraController: NSObject, @unchecked Sendable, AVCaptu
     private let videoOutput = AVCaptureVideoDataOutput()
     private let logger = Logger(subsystem: "liziyue.PassPhoto", category: "Camera")
     private var input: AVCaptureDeviceInput?
+    private var position: AVCaptureDevice.Position = .back
+    /// Tracks how the phone is held, so frames and photos come out upright.
+    private var rotation: AVCaptureDevice.RotationCoordinator?
     private var frameIndex = 0
     private var photoHandler: (@Sendable (UIImage?) -> Void)?
 
@@ -59,6 +62,11 @@ nonisolated final class CameraController: NSObject, @unchecked Sendable, AVCaptu
     func capture(_ handler: @escaping @Sendable (UIImage?) -> Void) {
         queue.async { [self] in
             photoHandler = handler
+            // Rotate the photo to how the phone is held right now, so the face is upright.
+            if let connection = photoOutput.connection(with: .video), let angle = rotation?.videoRotationAngleForHorizonLevelCapture,
+               connection.isVideoRotationAngleSupported(angle) {
+                connection.videoRotationAngle = angle
+            }
             let settings = AVCapturePhotoSettings()
             settings.photoQualityPrioritization = .quality
             photoOutput.capturePhoto(with: settings, delegate: self)
@@ -78,6 +86,8 @@ nonisolated final class CameraController: NSObject, @unchecked Sendable, AVCaptu
         }
         session.addInput(newInput)
         input = newInput
+        self.position = position
+        rotation = AVCaptureDevice.RotationCoordinator(device: device, previewLayer: nil)
 
         if !session.outputs.contains(photoOutput), session.canAddOutput(photoOutput) {
             session.addOutput(photoOutput)
@@ -89,10 +99,7 @@ nonisolated final class CameraController: NSObject, @unchecked Sendable, AVCaptu
             videoOutput.setSampleBufferDelegate(self, queue: queue)
             session.addOutput(videoOutput)
         }
-        // Portrait photos and frames, so Vision sees an upright face.
-        for connection in [photoOutput.connection(with: .video), videoOutput.connection(with: .video)].compactMap({ $0 }) {
-            if connection.isVideoRotationAngleSupported(90) { connection.videoRotationAngle = 90 }
-        }
+        // Frames stay as the sensor delivers them (landscape); Vision is told their orientation instead.
     }
 
     // MARK: Frames
@@ -103,7 +110,11 @@ nonisolated final class CameraController: NSObject, @unchecked Sendable, AVCaptu
         guard frameIndex % 6 == 0, let buffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
 
         let request = VNDetectFaceRectanglesRequest()
-        try? VNImageRequestHandler(cvPixelBuffer: buffer, orientation: .up).perform([request])
+        let angle = rotation?.videoRotationAngleForHorizonLevelCapture ?? 90
+        let orientation = Self.orientation(forRotationAngle: angle, front: position == .front)
+        // With the orientation given, Vision's face box is in upright (and, for the front camera, mirrored
+        // like the preview) coordinates, matching what's on screen.
+        try? VNImageRequestHandler(cvPixelBuffer: buffer, orientation: orientation).perform([request])
         let faces = request.results ?? []
         let face = faces.max { $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height }
         let reading = FrameReading(
@@ -115,6 +126,16 @@ nonisolated final class CameraController: NSObject, @unchecked Sendable, AVCaptu
         )
         if let onReading {
             Task { @MainActor in onReading(reading) }
+        }
+    }
+
+    /// How to read a sensor frame upright, given the rotation the device needs for a level picture.
+    static func orientation(forRotationAngle angle: CGFloat, front: Bool) -> CGImagePropertyOrientation {
+        switch (Int(angle.rounded()) % 360 + 360) % 360 {
+        case 90: front ? .leftMirrored : .right
+        case 180: front ? .downMirrored : .down
+        case 270: front ? .rightMirrored : .left
+        default: front ? .upMirrored : .up
         }
     }
 
@@ -138,7 +159,13 @@ nonisolated final class CameraController: NSObject, @unchecked Sendable, AVCaptu
     // MARK: Photos
 
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: (any Error)?) {
-        let image = photo.fileDataRepresentation().flatMap { UIImage(data: $0) }
+        var image = photo.fileDataRepresentation().flatMap { UIImage(data: $0) }
+        // Safety net: if the photo still arrives landscape while the phone is held upright, turn it upright.
+        if let photo = image, let cgImage = photo.cgImage, photo.size.width > photo.size.height,
+           let angle = rotation?.videoRotationAngleForHorizonLevelCapture, Int(angle.rounded()) % 180 == 90 {
+            let orientation: UIImage.Orientation = position == .front ? .leftMirrored : .right
+            image = UIImage(cgImage: cgImage, scale: photo.scale, orientation: orientation)
+        }
         if let error { logger.error("Capture failed: \(error.localizedDescription, privacy: .public)") }
         photoHandler?(image)
         photoHandler = nil

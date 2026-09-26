@@ -11,6 +11,7 @@ struct GuidedCameraView: View {
     @State private var camera = CameraController()
     @State private var level = DeviceLevel()
     @State private var reading: FrameReading?
+    @State private var stabilizer = HintStabilizer()
     @State private var position: AVCaptureDevice.Position = .back
     @State private var denied = false
     @State private var capturing = false
@@ -52,14 +53,24 @@ struct GuidedCameraView: View {
                 .padding(.horizontal)
 
                 if !denied {
-                    Text(hint.message)
-                        .font(.headline)
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 10)
-                        .background((hint.ready ? Color.dsTint : Color.black.opacity(0.6)), in: .capsule)
-                        .animation(.snappy, value: hint.message)
-                        .accessibilityAddTraits(.updatesFrequently)
+                    HStack(spacing: 8) {
+                        if hint.ready {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(Color.dsGuidePass)
+                                .transition(.scale.combined(with: .opacity))
+                        }
+                        Text(hint.message)
+                    }
+                    .font(.headline)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background((hint.ready ? Color.dsTintFill : Color.black.opacity(0.6)), in: .capsule)
+                    .overlay { Capsule().strokeBorder(Color.dsGuidePass, lineWidth: hint.ready ? 1.5 : 0) }
+                    .animation(.snappy, value: hint)
+                    .accessibilityAddTraits(.updatesFrequently)
+                    // A tap on the hand when everything lines up.
+                    .sensoryFeedback(.success, trigger: hint.ready) { _, ready in ready }
                 }
                 Spacer()
 
@@ -98,7 +109,10 @@ struct GuidedCameraView: View {
                 denied = true
                 return
             }
-            camera.onReading = { reading = $0 }
+            camera.onReading = { newReading in
+                reading = newReading
+                _ = stabilizer.update(CaptureHint(reading: newReading, tilt: level.tilt, pitch: level.pitch, screen: screen))
+            }
             camera.start(position: position)
             level.start()
         }
@@ -109,9 +123,7 @@ struct GuidedCameraView: View {
         .statusBarHidden()
     }
 
-    private var hint: CaptureHint {
-        CaptureHint(reading: reading, tilt: level.tilt, pitch: level.pitch, screen: screen)
-    }
+    private var hint: CaptureHint { stabilizer.shown }
 
     private func shoot() {
         capturing = true
@@ -127,8 +139,23 @@ struct GuidedCameraView: View {
     }
 }
 
+/// Keeps the coaching steady: a new hint shows only once it has held for a couple of readings, and the
+/// ready state takes (and leaves) a little longer, so small wobbles don't make it flicker.
+struct HintStabilizer {
+    private(set) var shown = CaptureHint(message: "Starting the camera…", ready: false)
+    private var pending: CaptureHint?
+    private var count = 0
+
+    mutating func update(_ new: CaptureHint) -> CaptureHint {
+        if new.message == pending?.message { count += 1 } else { pending = new; count = 1 }
+        let needed = (new.ready || shown.ready) ? 3 : 2
+        if new.message == shown.message || count >= needed { shown = new }
+        return shown
+    }
+}
+
 /// The one thing to fix next, in priority order.
-struct CaptureHint {
+struct CaptureHint: Equatable {
     let message: String
     let ready: Bool
 
@@ -153,6 +180,11 @@ struct CaptureHint {
         return CGRect(x: oval.midX - width / 2, y: oval.minY + oval.height * 0.66 - height / 2, width: width, height: height)
     }
 
+    init(message: String, ready: Bool) {
+        self.message = message
+        self.ready = ready
+    }
+
     init(reading: FrameReading?, tilt: Double, pitch: Double, screen: CGSize) {
         let visibleWidth = min(1, (screen.width / max(1, screen.height)) / Self.frameAspect)
         let target = Self.faceTarget(in: screen)
@@ -169,16 +201,17 @@ struct CaptureHint {
             )
             if reading.faceCount > 1 { return hint("Only one person in the photo") }
             if reading.brightness < 0.25 { return hint("Find more light") }
-            if abs(tilt) > 4 { return hint("Hold the phone straight") }
-            if abs(pitch) > 12 { return hint("Hold the phone upright, at eye level") }
-            if face.height < target.height * 0.8 { return hint("Move closer") }
-            if face.height > target.height * 1.25 { return hint("Move back a little") }
-            if abs(face.midX - target.midX) > screen.width * 0.08 || abs(face.midY - target.midY) > screen.height * 0.05 {
+            // Generous limits: PassPhoto crops afterwards, so the framing only has to be roughly right.
+            if abs(tilt) > 6 { return hint("Hold the phone straight") }
+            if abs(pitch) > 15 { return hint("Hold the phone upright, at eye level") }
+            if face.height < target.height * 0.7 { return hint("Move closer") }
+            if face.height > target.height * 1.4 { return hint("Move back a little") }
+            if abs(face.midX - target.midX) > screen.width * 0.12 || abs(face.midY - target.midY) > screen.height * 0.08 {
                 return hint("Put the face in the outline")
             }
-            if abs(reading.rollDegrees) > 5 { return hint("Keep the head level") }
-            if abs(reading.yawDegrees) > 12 { return hint("Face the camera straight on") }
-            return ("Looks good. Take the photo.", true)
+            if abs(reading.rollDegrees) > 7 { return hint("Keep the head level") }
+            if abs(reading.yawDegrees) > 15 { return hint("Face the camera straight on") }
+            return ("Looks good — take the photo", true)
         }()
         message = result.0
         ready = result.1
