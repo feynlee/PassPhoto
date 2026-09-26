@@ -20,18 +20,18 @@ struct AboutView: View {
                 Section {
                     Label {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("No uploads, no account").font(.headline)
+                            Text("No uploads, no account").font(.headline).foregroundStyle(Color.dsTint)
                             Text("Faces, crops and backgrounds are measured on this iPhone. Only the quality check goes to Apple’s Private Cloud Compute, which processes the photo privately and doesn’t keep it. Nothing is sent to PassPhoto or anyone else.")
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.dsInk)
                         }
                     } icon: {
                         Image(systemName: "lock.shield").foregroundStyle(Color.dsTint)
                     }
                     Label {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Only what’s needed").font(.headline)
+                            Text("Only what’s needed").font(.headline).foregroundStyle(Color.dsTint)
                             Text("Photos are cropped and scaled. The background is replaced only when it breaks the rules, and you can turn that off. Faces are never retouched.")
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.dsInk)
                         }
                     } icon: {
                         Image(systemName: "crop").foregroundStyle(Color.dsTint)
@@ -51,14 +51,14 @@ struct AboutView: View {
                         Task { await updater.check() }
                     } label: {
                         HStack {
-                            Text("Check for Updates")
+                            Text("Check for Updates").foregroundStyle(Color.dsTint)
                             Spacer()
                             if updater.status == .checking { ProgressView() }
                         }
                     }
                     .disabled(updater.status == .checking)
                 } header: {
-                    Text("Requirements")
+                    Text("Requirements").foregroundStyle(Color.dsTint)
                 } footer: {
                     Text(requirementsFooter)
                 }
