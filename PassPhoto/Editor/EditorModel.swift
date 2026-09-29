@@ -69,7 +69,7 @@ final class EditorModel {
         self.editing = editing
         self.initialCrop = editing?.crop
         self.isInfant = editing?.isInfant ?? (infant && spec.infant != nil)
-        self.replaceBackground = editing?.backgroundReplaced ?? UserDefaults.standard.object(forKey: Self.replaceBackgroundKey) as? Bool ?? true
+        self.replaceBackground = editing?.backgroundReplaced ?? UserDefaults.standard.object(forKey: Self.replaceBackgroundKey) as? Bool ?? false
     }
 
     /// The spec as applied to this photo: with the baby rules when they're on.

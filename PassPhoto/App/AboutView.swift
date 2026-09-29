@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct AboutView: View {
+    @Environment(TipJar.self) private var jar
     @Environment(\.dismiss) private var dismiss
     private var updater: RequirementsUpdater { .shared }
 
@@ -30,12 +31,19 @@ struct AboutView: View {
                     Label {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Only what’s needed").font(.headline).foregroundStyle(Color.dsTint)
-                            Text("Photos are cropped and scaled. The background is replaced only when it breaks the rules, and you can turn that off. Faces are never retouched.")
+                            Text("Photos are only cropped and scaled to the official size. Background replacement is optional and off unless you turn it on. Faces are never retouched.")
                                 .foregroundStyle(Color.dsInk)
                         }
                     } icon: {
                         Image(systemName: "crop").foregroundStyle(Color.dsTint)
                     }
+                }
+
+                // The tip jar, so it can be found without saving a photo first.
+                Section {
+                    TipSupportBanner()
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
                 }
 
                 Section {
@@ -66,6 +74,7 @@ struct AboutView: View {
                 }
             }
             .navigationTitle("About PassPhoto")
+            .task { await jar.store.loadProducts() }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }

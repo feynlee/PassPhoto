@@ -79,9 +79,11 @@ private extension ChecksList {
 
     var adjustmentsFooter: String {
         guard model.canReplaceBackground else { return String(localized: "The background can’t be replaced: the person couldn’t be separated from it.") }
-        if model.backgroundIsReplaced { return String(localized: "Your background didn’t meet the rules, so it was replaced. The person isn’t changed.") }
-        if model.replaceBackground { return String(localized: "The background is replaced only when it doesn’t meet the rules.") }
-        return String(localized: "The original background is kept.")
+        if model.backgroundIsReplaced {
+            return String(localized: "Your background didn’t meet the rules, so it was replaced. The person isn’t changed. Some issuers don’t accept a replaced background; check the official rules before you use this photo.")
+        }
+        if model.replaceBackground { return String(localized: "The background is replaced only when it doesn’t meet the rules. The person is never changed.") }
+        return String(localized: "Off: the photo is only cropped and scaled, never altered. If the background doesn’t meet the rules, retake it against a plain wall.")
     }
 }
 
