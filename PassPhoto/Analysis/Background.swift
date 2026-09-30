@@ -37,7 +37,7 @@ nonisolated struct BackgroundStats: Sendable, Equatable {
     var isPlain: Bool { unevenness <= 0.08 }
 }
 
-/// Separates the person from the background on-device, measures the background, and replaces it.
+/// Separates the person from the background on-device and measures the background.
 nonisolated enum Background {
     private static let logger = Logger(subsystem: "liziyue.PassPhoto", category: "Background")
     private static let context = CIContext()
@@ -83,25 +83,6 @@ nonisolated enum Background {
         let mean = lum.reduce(0, +) / n
         let spread = (lum.reduce(0) { $0 + ($1 - mean) * ($1 - mean) } / n).squareRoot()
         return BackgroundStats(red: sum.r / n, green: sum.g / n, blue: sum.b / n, unevenness: spread)
-    }
-
-    /// The image with everything outside the person filled with `fill` (0xRRGGBB).
-    @concurrent
-    static func replace(_ image: CGImage, mask: CGImage, fill: UInt32) async -> CGImage? {
-        let width = image.width, height = image.height
-        guard let context = CGContext(
-            data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 0,
-            space: CGColorSpace(name: CGColorSpace.sRGB)!, bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue
-        ) else { return nil }
-        let rect = CGRect(x: 0, y: 0, width: width, height: height)
-        context.setFillColor(CGColor(
-            srgbRed: CGFloat((fill >> 16) & 0xFF) / 255, green: CGFloat((fill >> 8) & 0xFF) / 255,
-            blue: CGFloat(fill & 0xFF) / 255, alpha: 1
-        ))
-        context.fill(rect)
-        context.clip(to: rect, mask: mask)
-        context.draw(image, in: rect)
-        return context.makeImage()
     }
 
     /// Raw bytes of `image` redrawn at the given size: RGBA, or one byte per pixel for a mask.

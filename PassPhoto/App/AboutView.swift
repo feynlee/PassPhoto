@@ -31,7 +31,7 @@ struct AboutView: View {
                     Label {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Only what’s needed").font(.headline).foregroundStyle(Color.dsTint)
-                            Text("Photos are only cropped and scaled to the official size. Background replacement is optional and off unless you turn it on. Faces are never retouched.")
+                            Text("Photos are only cropped and scaled to the official size. Nothing in the photo is changed, and faces are never retouched.")
                                 .foregroundStyle(Color.dsInk)
                         }
                     } icon: {

@@ -211,7 +211,7 @@ struct PhotoWorkspace: View {
                     CropCanvas(model: model)
                 }
 
-                // Auto Crop and Replace float over the top of the photo area.
+                // Auto Crop and Change Photo float over the top of the photo area.
                 HStack {
                     if model.phase == .ready {
                         Button("Auto Crop", systemImage: "wand.and.stars") {
@@ -227,10 +227,9 @@ struct PhotoWorkspace: View {
                         }
                         Button("Choose from Library", systemImage: "photo.on.rectangle") { choosingPhoto = true }
                     } label: {
-                        Label("Replace", systemImage: "arrow.triangle.2.circlepath")
+                        Label("Change Photo", systemImage: "arrow.triangle.2.circlepath")
                             .modifier(FloatingChip())
                     }
-                    .accessibilityLabel("Replace Photo")
                 }
                 .padding(10)
             }

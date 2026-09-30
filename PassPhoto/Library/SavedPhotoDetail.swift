@@ -45,9 +45,6 @@ struct SavedPhotoDetail: View {
                     Label("\(photo.spec.title) rules changed after this photo was made (now as of \(photo.spec.verifiedLabel)). Adjust it to check it against the new rules.", systemImage: CheckStatus.attention.symbol)
                         .foregroundStyle(Color.dsAttention)
                 }
-                if photo.backgroundReplaced {
-                    LabeledContent("Background", value: "Replaced")
-                }
                 if photo.isInfant {
                     LabeledContent("Rules", value: "Baby")
                 }

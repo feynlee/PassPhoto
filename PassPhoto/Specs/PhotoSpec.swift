@@ -104,7 +104,7 @@ nonisolated struct PhotoSpec: Identifiable, Hashable, Sendable, Decodable {
     /// Cheek to cheek, where the spec gives one.
     let faceWidthMM: ClosedRange<Double>?
     let background: Background
-    /// The colour a replaced background is filled with, as 0xRRGGBB.
+    /// The data files' background colour, as 0xRRGGBB. Not used by the app, which never replaces backgrounds.
     let backgroundFill: UInt32
     let glasses: Glasses
     /// A fixed pixel size for digital uploads; otherwise the photo is rendered at `printDPI`.

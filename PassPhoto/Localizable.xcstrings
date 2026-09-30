@@ -243,16 +243,6 @@
         }
       }
     },
-    "%@; replaced with %@ as required. Turn off Replace Background to keep the original.": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@；已按要求替换为%2$@。关闭“替换背景”即可保留原背景。"
-          }
-        }
-      }
-    },
     "%lld Photo Requirements": {
       "localizations": {
         "zh-Hans": {
@@ -639,6 +629,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "居中"
+          }
+        }
+      }
+    },
+    "Change Photo": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更换照片"
           }
         }
       }
@@ -1773,16 +1773,6 @@
         }
       }
     },
-    "Off: the photo is only cropped and scaled, never altered. If the background doesn’t meet the rules, retake it against a plain wall.": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已关闭：照片只会被裁剪和缩放，不做任何修改。如果背景不符合规定，请在纯色墙前重拍。"
-          }
-        }
-      }
-    },
     "Official photo rules": {
       "localizations": {
         "zh-Hans": {
@@ -2073,12 +2063,12 @@
         }
       }
     },
-    "Photos are only cropped and scaled to the official size. Background replacement is optional and off unless you turn it on. Faces are never retouched.": {
+    "Photos are only cropped and scaled to the official size. Nothing in the photo is changed, and faces are never retouched.": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "照片只会按官方尺寸裁剪和缩放。背景替换为可选功能，默认关闭，需要时可手动开启。绝不修饰人脸。"
+            "value": "照片只会按官方尺寸裁剪和缩放，不会改动照片中的任何内容，也绝不修饰人脸。"
           }
         }
       }
@@ -2309,36 +2299,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "重新命名照片"
-          }
-        }
-      }
-    },
-    "Replace": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "替换"
-          }
-        }
-      }
-    },
-    "Replace Background": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "替换背景"
-          }
-        }
-      }
-    },
-    "Replace Photo": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "替换照片"
           }
         }
       }
@@ -2699,36 +2659,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "无法读取该照片。"
-          }
-        }
-      }
-    },
-    "The background can’t be replaced: the person couldn’t be separated from it.": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "无法替换背景：无法将人物与背景分离。"
-          }
-        }
-      }
-    },
-    "The background is replaced only when it doesn’t meet the rules. The person is never changed.": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "只有在背景不符合规定时才会替换，人物本身绝不改动。"
-          }
-        }
-      }
-    },
-    "The background was replaced.": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "背景已替换。"
           }
         }
       }
@@ -3109,16 +3039,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "你的背景"
-          }
-        }
-      }
-    },
-    "Your background didn’t meet the rules, so it was replaced. The person isn’t changed. Some issuers don’t accept a replaced background; check the official rules before you use this photo.": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "你的背景不符合规定，因此已被替换，人物本身未做改动。部分签发机构不接受替换过背景的照片，使用前请查看官方规定。"
           }
         }
       }

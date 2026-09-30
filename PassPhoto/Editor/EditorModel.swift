@@ -3,9 +3,8 @@ import Foundation
 import SwiftData
 import UIKit
 
-/// One photo being fitted to a spec: measures the head and background, proposes the crop, replaces the
-/// background when it doesn't meet the rules, keeps the checks current while the person pans and zooms, and
-/// saves the result.
+/// One photo being fitted to a spec: measures the head and background, proposes the crop, keeps the checks
+/// current while the person pans and zooms, and saves the result. The photo is only cropped and scaled.
 @Observable
 final class EditorModel {
     enum Phase: Equatable {
@@ -31,20 +30,12 @@ final class EditorModel {
     private(set) var measurement: FaceMeasurement?
     private(set) var review: Review = .idle
     private(set) var backgroundStats: BackgroundStats?
-    /// The photo as shown and saved: the original, or the original with its background replaced.
-    private(set) var displayImage: UIImage
+    /// The photo as shown. PassPhoto never changes its pixels; it only crops and scales.
+    let displayImage: UIImage
     /// The crop in the original's pixels, top-left origin. Updated live while panning and zooming.
     var crop: CGRect = .zero
     /// What auto-crop proposes for the current spec; the target oval is drawn from it.
     private(set) var autoCropRect: CGRect = .zero
-
-    /// Replace a background that doesn't meet the rules. On by default; remembered across photos.
-    var replaceBackground: Bool {
-        didSet {
-            UserDefaults.standard.set(replaceBackground, forKey: Self.replaceBackgroundKey)
-            Task { await updateComposite() }
-        }
-    }
 
     /// Apply the spec's rules for babies. Only offered when the spec has them.
     var isInfant = false {
@@ -52,14 +43,12 @@ final class EditorModel {
     }
 
     private var personMask: CGImage?
-    private var composite: (fill: UInt32, image: CGImage)?
     private let reviewer = PhotoReviewer()
     private let initialCrop: CGRect?
     #if DEBUG
     /// Skips Vision with known measurements (the demo photo).
     var presetMeasurement: FaceMeasurement?
     #endif
-    private static let replaceBackgroundKey = "replaceBackground"
 
     init(image: CGImage, spec: PhotoSpec, infant: Bool = false, editing: SavedPhoto? = nil) {
         self.image = image
@@ -69,7 +58,6 @@ final class EditorModel {
         self.editing = editing
         self.initialCrop = editing?.crop
         self.isInfant = editing?.isInfant ?? (infant && spec.infant != nil)
-        self.replaceBackground = editing?.backgroundReplaced ?? UserDefaults.standard.object(forKey: Self.replaceBackgroundKey) as? Bool ?? false
     }
 
     /// The spec as applied to this photo: with the baby rules when they're on.
@@ -106,7 +94,6 @@ final class EditorModel {
         proposeCrop()
         if let initialCrop, initialCrop.width > 0 { crop = initialCrop }
         phase = .ready
-        await updateComposite()
         await runReview()
     }
 
@@ -115,7 +102,6 @@ final class EditorModel {
         spec = newSpec
         if spec.infant == nil { isInfant = false }
         proposeCrop()
-        Task { await updateComposite() }
     }
 
     /// Back to the auto crop for the current spec.
@@ -129,45 +115,12 @@ final class EditorModel {
         crop = autoCropRect
     }
 
-    // MARK: Background
-
-    /// How the original background compares with the spec, from the pixels and from the model.
-    var originalBackgroundStatus: CheckStatus? {
-        let measured = backgroundStats.map { $0.isPlain ? Checks.backgroundStatus($0.tone, rule: spec.background) : .fail }
-        var model: CheckStatus?
-        if case .done(let observations, _) = review {
-            let tone = BackgroundTone(rawValue: observations.backgroundTone) ?? .busy
-            model = observations.backgroundIsPlain && !observations.shadowOnBackground
-                ? Checks.backgroundStatus(tone, rule: spec.background) : .fail
-        }
-        return [measured, model].compactMap { $0 }.max()
-    }
-
-    /// The background is replaced when it doesn't pass, replacing is on, and the person could be separated.
-    var backgroundIsReplaced: Bool {
-        replaceBackground && personMask != nil && (originalBackgroundStatus.map { $0 != .pass } ?? false)
-    }
-
-    var canReplaceBackground: Bool { personMask != nil }
-
-    private func updateComposite() async {
-        guard backgroundIsReplaced, let personMask else {
-            displayImage = UIImage(cgImage: image)
-            return
-        }
-        let fill = spec.backgroundFill
-        if composite?.fill != fill, let replaced = await Background.replace(image, mask: personMask, fill: fill) {
-            composite = (fill, replaced)
-        }
-        displayImage = UIImage(cgImage: composite?.image ?? image)
-    }
-
     // MARK: Review
 
     func runReview() async {
         review = .running
-        // The model sees the original (not the replaced background) around the area auto-crop chose, at a
-        // size that keeps detail without spending the context on pixels.
+        // The model sees the area auto-crop chose, at a size that keeps detail without spending the context
+        // on pixels.
         let region = autoCropRect.intersection(CGRect(origin: .zero, size: imageSize))
         let source = region.isNull || region.isEmpty ? CGRect(origin: .zero, size: imageSize) : region
         let scale = min(1, 1024 / max(source.width, source.height))
@@ -181,8 +134,6 @@ final class EditorModel {
         } catch {
             review = .unavailable(error.localizedDescription)
         }
-        // The review may have found a background problem the pixels didn't.
-        await updateComposite()
     }
 
     // MARK: Checks
@@ -201,13 +152,13 @@ final class EditorModel {
         guard measurement != nil else { return nil }
         var observations: PhotoObservations?
         if case .done(let o, _) = review { observations = o }
-        return Checks.background(spec: spec, stats: backgroundStats, observations: observations, replaced: backgroundIsReplaced)
+        return Checks.background(spec: spec, stats: backgroundStats, observations: observations)
     }
 
     var modelChecks: [CheckResult] {
         switch review {
         case .done(let observations, _):
-            Checks.observations(observations, spec: effectiveSpec, infant: isInfant, backgroundReplaced: backgroundIsReplaced)
+            Checks.observations(observations, spec: effectiveSpec, infant: isInfant)
         case .unavailable: Checks.manual(spec: spec)
         case .idle, .running: []
         }
@@ -233,10 +184,8 @@ final class EditorModel {
 
     // MARK: Output
 
-    private var outputSource: CGImage { backgroundIsReplaced ? composite?.image ?? image : image }
-
     func render() -> CGImage? {
-        PhotoRenderer.render(outputSource, crop: crop, size: spec.outputPixels)
+        PhotoRenderer.render(image, crop: crop, size: spec.outputPixels)
     }
 
     /// The finished JPEG, compressed to fit the spec's upload limit when it has one.
@@ -288,7 +237,6 @@ final class EditorModel {
             editing.pixelWidth = Int(spec.outputPixels.width)
             editing.pixelHeight = Int(spec.outputPixels.height)
             editing.openIssues = openIssues
-            editing.backgroundReplaced = backgroundIsReplaced
             editing.isInfant = isInfant
             editing.specFingerprint = spec.fingerprint
         } else {
@@ -300,7 +248,6 @@ final class EditorModel {
                 name: name, spec: spec, createdAt: date, fileName: fileName, originalFileName: originalName,
                 crop: crop, pixels: spec.outputPixels, openIssues: openIssues
             )
-            photo.backgroundReplaced = backgroundIsReplaced
             photo.isInfant = isInfant
             photo.specFingerprint = spec.fingerprint
             context.insert(photo)

@@ -109,7 +109,6 @@ struct SaveSheet: View {
         let file = PhotoStore.exportFileName(name: name, date: model.editing?.createdAt ?? .now)
         var sentences = [String(localized: "Saved as “\(file)”, \(Int(spec.outputPixels.width)) × \(Int(spec.outputPixels.height)) pixels.")]
         if let kb = spec.maxFileKB { sentences.append(String(localized: "Compressed to \(kb) KB or less for upload.")) }
-        if model.backgroundIsReplaced { sentences.append(String(localized: "The background was replaced.")) }
         return sentences.joined(separator: " ")
     }
 

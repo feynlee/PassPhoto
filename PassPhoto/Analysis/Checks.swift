@@ -95,17 +95,12 @@ nonisolated enum Checks {
         return results
     }
 
-    /// The background, from the measured pixels and the model's description. A replaced background passes.
-    static func background(spec: PhotoSpec, stats: BackgroundStats?, observations o: PhotoObservations?, replaced: Bool) -> CheckResult {
+    /// The background, from the measured pixels and the model's description.
+    static func background(spec: PhotoSpec, stats: BackgroundStats?, observations o: PhotoObservations?) -> CheckResult {
         let need = spec.background.requirement.lowercased()
         let modelTone = o.flatMap { BackgroundTone(rawValue: $0.backgroundTone) }
         let tone = stats?.tone ?? modelTone
         let described = tone.map { String(localized: "Your background is \($0.label)") } ?? String(localized: "Your background")
-        if replaced {
-            return CheckResult(id: "background", title: String(localized: "Background"),
-                               detail: String(localized: "\(described); replaced with \(need) as required. Turn off Replace Background to keep the original."),
-                               status: .pass, source: .measured)
-        }
         let plain = (stats?.isPlain ?? true) && (o?.backgroundIsPlain ?? true)
         let statuses = [stats.map { backgroundStatus($0.tone, rule: spec.background) },
                         modelTone.map { backgroundStatus($0, rule: spec.background) }].compactMap { $0 }
@@ -119,7 +114,7 @@ nonisolated enum Checks {
         return CheckResult(id: "background", title: String(localized: "Background"), detail: detail, status: status, source: o == nil ? .measured : .model)
     }
 
-    static func observations(_ o: PhotoObservations, spec: PhotoSpec, infant: Bool = false, backgroundReplaced: Bool = false) -> [CheckResult] {
+    static func observations(_ o: PhotoObservations, spec: PhotoSpec, infant: Bool = false) -> [CheckResult] {
         var results: [CheckResult] = []
         let babyEyes = infant && spec.infant?.eyesMayBeClosed == true
         let babyMouth = infant && spec.infant?.mouthMayBeOpen == true
@@ -127,7 +122,7 @@ nonisolated enum Checks {
         results.append(flag(id: "lighting", title: String(localized: "Lighting"), ok: o.lightingIsEven && !o.shadowOnFace,
                             pass: String(localized: "Even, with no shadows on the face."),
                             problem: o.shadowOnFace ? String(localized: "There are shadows on the face. Face a window or add light from the front.") : String(localized: "The face is too dark or too bright.")))
-        results.append(flag(id: "shadow", title: String(localized: "No background shadow"), ok: !o.shadowOnBackground || backgroundReplaced,
+        results.append(flag(id: "shadow", title: String(localized: "No background shadow"), ok: !o.shadowOnBackground,
                             pass: String(localized: "No shadow behind you."),
                             problem: String(localized: "Your shadow shows on the background. Step away from the wall."), failing: .attention))
 

@@ -20,6 +20,7 @@ final class SavedPhoto {
     var pixelHeight: Int = 0
     /// How many checks needed a look or failed when it was saved.
     var openIssues: Int = 0
+    /// Unused: background replacement was removed. Kept so existing stores still load.
     var backgroundReplaced: Bool = false
     var isInfant: Bool = false
     /// The rules the photo was made with (PhotoSpec.fingerprint).
