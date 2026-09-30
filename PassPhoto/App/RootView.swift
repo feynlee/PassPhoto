@@ -116,9 +116,17 @@ struct RootView: View {
                 jar.saved = SavedSummary(fileName: "United States Passport 2026-09-26 09.30.jpg", toPhotos: true, inApp: true, printSheet: true)
             }
             if ProcessInfo.processInfo.arguments.contains("-demoEditor") {
-                let model = EditorModel(image: DemoPhoto.image(), spec: startSpec)
-                model.presetMeasurement = DemoPhoto.measurement
-                workspace = .photo(model)
+                // `-demoSpec <id>` picks the document; `-demoImage <path>` opens that photo (measured as usual)
+                // instead of the drawn stand-in, for App Store screenshots.
+                let defaults = UserDefaults.standard
+                let spec = defaults.string(forKey: "demoSpec").flatMap { id in SpecCatalog.all.first { $0.id == id } } ?? startSpec
+                if let path = defaults.string(forKey: "demoImage"), let image = UIImage(contentsOfFile: path)?.cgImage {
+                    workspace = .photo(EditorModel(image: image, spec: spec))
+                } else {
+                    let model = EditorModel(image: DemoPhoto.image(), spec: spec)
+                    model.presetMeasurement = DemoPhoto.measurement
+                    workspace = .photo(model)
+                }
             }
         }
         #endif
